@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvQuantity, tvPrice,btnIncrement, btnDecrement;
     int quantity = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
