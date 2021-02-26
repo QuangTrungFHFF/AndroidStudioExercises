@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 quantity+=1;
                 display(quantity);
-                displayPrice(quantity*5);
+                displayPrice(quantity*5,false);
             }
         });
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     quantity =0;
                 }
                 display(quantity);
-                displayPrice(quantity*5);
+                displayPrice(quantity*5,false);
             }
         });
         }
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void submitOrder(View view) {
         //display(quantity);
-        displayPrice(quantity*5);
+        displayPrice(quantity*5,true);
         Toast toast = Toast.makeText(getApplicationContext(),"Order success!",Toast.LENGTH_SHORT);
         toast.show();
     }
@@ -70,9 +70,20 @@ public class MainActivity extends AppCompatActivity {
         quantityTextView.setText("" + number);
     }
 
-    private void displayPrice(int number)
+    private void displayPrice(int number, boolean isOrdered)
     {
-        tvPrice = (TextView)findViewById(R.id.price_textview);
-        tvPrice.setText(NumberFormat.getCurrencyInstance().format(number));
+        if(!isOrdered)
+        {
+            tvPrice = (TextView)findViewById(R.id.price_textview);
+            tvPrice.setText("Total: " + NumberFormat.getCurrencyInstance().format(number));
+        }
+        else
+        {
+            tvPrice = (TextView)findViewById(R.id.price_textview);
+            String total = "Total: " + NumberFormat.getCurrencyInstance().format(number);
+            String thanks = "Thank you!";
+            tvPrice.setText(total + "\r\n" + thanks);
+        }
+
     }
 }
