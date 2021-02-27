@@ -9,14 +9,18 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tvScoreA;
+    TextView tvScoreA, tvScoreB;
     Button teamAPlusThree, teamAPlusTwo,teamAFree;
+    Button teamBPlusThree, teamBPlusTwo,teamBFree;
     int scoreA =0;
+    int scoreB =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         displayTeamAScore(0);
+
+        //Team A ----------------------------------------------------
 
         teamAPlusThree = (Button)findViewById(R.id.teama_plus_three);
         teamAPlusTwo = (Button)findViewById(R.id.teama_plus_two);
@@ -45,6 +49,36 @@ public class MainActivity extends AppCompatActivity {
                 displayTeamAScore(scoreA);
             }
         });
+
+        //Team B ----------------------------------------------------
+
+        teamBPlusThree = (Button)findViewById(R.id.teamb_plus_three);
+        teamBPlusTwo = (Button)findViewById(R.id.teamb_plus_two);
+        teamBFree = (Button)findViewById(R.id.teamb_free);
+
+        teamBPlusThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scoreB+=3;
+                displayTeamBScore(scoreB);
+            }
+        });
+
+        teamBPlusTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scoreB+=2;
+                displayTeamBScore(scoreB);
+            }
+        });
+
+        teamBFree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scoreB+=1;
+                displayTeamBScore(scoreB);
+            }
+        });
     }
 
 
@@ -52,5 +86,11 @@ public class MainActivity extends AppCompatActivity {
     {
         tvScoreA = (TextView)findViewById(R.id.teama_score);
         tvScoreA.setText(String.valueOf(score));
+    }
+
+    private void displayTeamBScore(int score)
+    {
+        tvScoreB = (TextView)findViewById(R.id.teamb_score);
+        tvScoreB.setText(String.valueOf(score));
     }
 }
