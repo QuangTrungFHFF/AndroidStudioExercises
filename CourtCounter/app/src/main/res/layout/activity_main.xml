@@ -6,13 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline"
+        app:layout_constraintGuide_percent="0.5"
+        android:orientation="vertical"/>
+
+    <!-- Team A-->
+
     <TextView
         android:id="@+id/teama_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Team A"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:layout_width="wrap_content"
@@ -20,14 +29,14 @@
         android:id="@+id/teama_score"
         android:text="0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@id/teama_label"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/teama_plus_three"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="@id/guideline"
         android:text="+3 POINTS"
         app:layout_constraintTop_toBottomOf="@id/teama_score"/>
     <Button
@@ -35,7 +44,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/teama_plus_two"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="@id/guideline"
         android:text="+2 POINTS"
         app:layout_constraintTop_toBottomOf="@id/teama_plus_three"/>
     <Button
@@ -43,8 +52,51 @@
         android:layout_height="wrap_content"
         android:id="@+id/teama_free"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="@id/guideline"
         android:text="FREE THROW"
         app:layout_constraintTop_toBottomOf="@id/teama_plus_two"/>
+
+    <!-- Team B-->
+
+    <TextView
+        android:id="@+id/teamb_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team B"
+        app:layout_constraintLeft_toLeftOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/teamb_score"
+        android:text="0"
+        app:layout_constraintLeft_toLeftOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/teamb_label"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/teamb_plus_three"
+        app:layout_constraintLeft_toLeftOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="+3 POINTS"
+        app:layout_constraintTop_toBottomOf="@id/teamb_score"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/teamb_plus_two"
+        app:layout_constraintLeft_toLeftOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="+2 POINTS"
+        app:layout_constraintTop_toBottomOf="@id/teamb_plus_three"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/teamb_free"
+        app:layout_constraintLeft_toLeftOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="FREE THROW"
+        app:layout_constraintTop_toBottomOf="@id/teamb_plus_two"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
