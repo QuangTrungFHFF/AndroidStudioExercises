@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView tvScoreA, tvScoreB;
     Button teamAPlusThree, teamAPlusTwo,teamAFree;
     Button teamBPlusThree, teamBPlusTwo,teamBFree;
+    Button btnReset;
+
     int scoreA =0;
     int scoreB =0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +81,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 scoreB+=1;
                 displayTeamBScore(scoreB);
+            }
+        });
+
+        //Reset Button ----------------------------------------------------
+
+        btnReset = (Button)findViewById(R.id.reset_score);
+
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scoreA = 0;
+                scoreB = 0;
+                displayTeamAScore(scoreA);
+                displayTeamBScore(scoreB);
+                Toast toast = Toast.makeText(getApplicationContext(),"Scores are reseted",Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
     }
