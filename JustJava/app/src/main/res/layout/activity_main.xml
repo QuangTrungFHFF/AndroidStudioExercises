@@ -1,52 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <EditText
+        android:id="@+id/name_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="8dp"
+        android:hint="Name"
+        android:paddingLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/topping_label"
         android:text="TOPPINGS"
-        android:paddingTop="16dp"
+        android:layout_marginTop="16dp"
         android:paddingLeft="16dp"
-        android:paddingBottom="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/name_edit_text" />
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
         android:id="@+id/topping_checkbox_cream"
         android:text="Whipped Cream"
         app:layout_constraintTop_toBottomOf="@id/topping_label"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
         android:textAlignment="center"
+        android:padding="0dp"
         android:layout_marginTop="8dp"
         android:onClick="hasToppingCheck"/>
+
     <CheckBox
+        android:id="@+id/topping_checkbox_chocolate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/topping_checkbox_chocolate"
-        android:text="Chocolate"
-        app:layout_constraintTop_toBottomOf="@id/topping_checkbox_cream"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
         android:layout_marginLeft="16dp"
-        android:textAlignment="center"
-        android:layout_marginBottom="16dp"
-        android:onClick="hasToppingCheck"/>
+        android:onClick="hasToppingCheck"
+        android:padding="0dp"
+        android:text="Chocolate"
+        android:textAlignment="gravity"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topping_checkbox_cream" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/quantity_label"
         android:text="QUANTITY"
+        android:paddingTop="8dp"
         android:paddingLeft="16dp"
         android:paddingBottom="8dp"
         app:layout_constraintLeft_toLeftOf="parent"

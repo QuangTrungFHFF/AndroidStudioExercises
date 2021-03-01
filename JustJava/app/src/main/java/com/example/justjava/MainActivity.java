@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,10 +15,12 @@ import java.text.NumberFormat;
 public class MainActivity extends AppCompatActivity {
 
     TextView tvQuantity, tvPrice,btnIncrement, btnDecrement;
+    EditText eName;
     boolean whippedCream = false;
     boolean chocolate = false;
     int quantity = 0;
     int basePrice = 5;
+    String customerName ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnIncrement = (Button)findViewById(R.id.increment_button);
         btnDecrement = (Button)findViewById(R.id.decrement_button);
+        eName =(EditText)findViewById(R.id.name_edit_text);
 
         btnIncrement.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,10 +64,19 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-        //display(quantity);
-        displayPrice(calculatePrice(basePrice),true);
-        Toast toast = Toast.makeText(getApplicationContext(),"Order success!",Toast.LENGTH_SHORT);
-        toast.show();
+        eName = (EditText)findViewById(R.id.name_edit_text);
+        if(isNameEmpty(eName)||quantity ==0)
+        {
+            Toast toast = Toast.makeText(getApplicationContext(),"Please input Name and quantity!",Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else {
+            getCustomerName(eName);
+            displayPrice(calculatePrice(basePrice),true);
+            Toast toast = Toast.makeText(getApplicationContext(),"Order success!",Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
     }
 
     /**
@@ -97,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
     private String createOrderSummary(int price)
     {
-        String name = "Name: Kaptain Kukupiku";
+
+        String name = "Name: " + customerName;
         String quantityTotal = "Quantity: " + quantity;
         String topping = "Topping: " + getToppingInfo();
         String total = "Total: " + NumberFormat.getCurrencyInstance().format(price);
@@ -163,5 +177,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return info;
+    }
+
+    private boolean isNameEmpty(EditText editText)
+    {
+        return editText.getText().toString().trim().length() == 0;
+    }
+
+    private void getCustomerName(EditText editText)
+    {
+        customerName = editText.getText().toString().trim();
     }
 }
