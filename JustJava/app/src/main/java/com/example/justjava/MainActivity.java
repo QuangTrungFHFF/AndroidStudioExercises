@@ -2,7 +2,10 @@ package com.example.justjava;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -99,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
             tvPrice = (TextView)findViewById(R.id.price_textview);//
             String order = createOrderSummary(number);
             tvPrice.setText(order);
+            String subject = "JustJava order for " + customerName;
+            composeEmails(subject,order);
         }
 
     }
@@ -187,5 +192,20 @@ public class MainActivity extends AppCompatActivity {
     private void getCustomerName(EditText editText)
     {
         customerName = editText.getText().toString().trim();
+    }
+
+    public void composeEmails(String subject, String body)
+    {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(intent.EXTRA_TEXT,body);
+        Log.i("TAG","Success till email");
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            Log.i("TAG","Success till package");
+            startActivity(intent);
+
+        }
+
     }
 }
