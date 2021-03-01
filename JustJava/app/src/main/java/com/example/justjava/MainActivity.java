@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,7 +14,10 @@ import java.text.NumberFormat;
 public class MainActivity extends AppCompatActivity {
 
     TextView tvQuantity, tvPrice,btnIncrement, btnDecrement;
+    boolean whippedCream = false;
+    boolean chocolate = false;
     int quantity = 0;
+    int basePrice = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 quantity+=1;
                 display(quantity);
-                displayPrice(calculatePrice(5),false);
+                displayPrice(calculatePrice(basePrice),false);
             }
         });
 
@@ -44,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     quantity =0;
                 }
                 display(quantity);
-                displayPrice(calculatePrice(5),false);
+                displayPrice(calculatePrice(basePrice),false);
             }
         });
         }
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void submitOrder(View view) {
         //display(quantity);
-        displayPrice(calculatePrice(5),true);
+        displayPrice(calculatePrice(basePrice),true);
         Toast toast = Toast.makeText(getApplicationContext(),"Order success!",Toast.LENGTH_SHORT);
         toast.show();
     }
@@ -95,10 +99,69 @@ public class MainActivity extends AppCompatActivity {
     {
         String name = "Name: Kaptain Kukupiku";
         String quantityTotal = "Quantity: " + quantity;
+        String topping = "Topping: " + getToppingInfo();
         String total = "Total: " + NumberFormat.getCurrencyInstance().format(price);
         String thanks = "Thank you!";
-        String result = name + "\n" + quantityTotal + "\n" + total + "\r\n" + thanks;
+        String result = name + "\n" + quantityTotal + "\n"+topping + "\n" + total + "\r\n" + thanks;
         return result;
     }
 
+
+    public void hasToppingCheck(View view) {
+        boolean isChecked = ((CheckBox)view).isChecked();
+        switch(view.getId())
+        {
+            case R.id.topping_checkbox_cream:
+                if (isChecked)
+                {
+                    whippedCream = true;
+                    basePrice+=2;
+                }
+                else
+                {
+                    whippedCream =false;
+                    basePrice-=2;
+                }
+                break;
+            case R.id.topping_checkbox_chocolate:
+                if (isChecked)
+                {
+                    chocolate = true;
+                    basePrice+=3;
+                }
+                else
+                {
+                    chocolate =false;
+                    basePrice-=3;
+                }
+                break;
+        }
+
+
+        display(quantity);
+        displayPrice(calculatePrice(basePrice),false);
+    }
+
+    private String getToppingInfo()
+    {
+        String info;
+        if(whippedCream&&chocolate)
+        {
+            info = "Whipped Cream and Chocolate.";
+        }
+        else if(whippedCream && !chocolate)
+        {
+            info = "Whipped Cream.";
+        }
+        else if(!whippedCream && chocolate)
+        {
+            info = "Chocolate.";
+        }
+        else
+        {
+            info = "None";
+        }
+
+        return info;
+    }
 }
