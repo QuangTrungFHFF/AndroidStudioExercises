@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 quantity+=1;
                 display(quantity);
-                displayPrice(quantity*5,false);
+                displayPrice(calculatePrice(5),false);
             }
         });
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     quantity =0;
                 }
                 display(quantity);
-                displayPrice(quantity*5,false);
+                displayPrice(calculatePrice(5),false);
             }
         });
         }
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void submitOrder(View view) {
         //display(quantity);
-        displayPrice(quantity*5,true);
+        displayPrice(calculatePrice(5),true);
         Toast toast = Toast.makeText(getApplicationContext(),"Order success!",Toast.LENGTH_SHORT);
         toast.show();
     }
@@ -79,11 +79,26 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
-            tvPrice = (TextView)findViewById(R.id.price_textview);
-            String total = "Total: " + NumberFormat.getCurrencyInstance().format(number);
-            String thanks = "Thank you!";
-            tvPrice.setText(total + "\r\n" + thanks);
+            tvPrice = (TextView)findViewById(R.id.price_textview);//
+            String order = createOrderSummary(number);
+            tvPrice.setText(order);
         }
 
     }
+
+    private int calculatePrice(int pricePerCup)
+    {
+        return quantity * pricePerCup;
+    }
+
+    private String createOrderSummary(int price)
+    {
+        String name = "Name: Kaptain Kukupiku";
+        String quantityTotal = "Quantity: " + quantity;
+        String total = "Total: " + NumberFormat.getCurrencyInstance().format(price);
+        String thanks = "Thank you!";
+        String result = name + "\n" + quantityTotal + "\n" + total + "\r\n" + thanks;
+        return result;
+    }
+
 }
