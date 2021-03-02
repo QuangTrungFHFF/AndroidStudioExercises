@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Create a new intent to open the {@link NumbersActivity}
                 Intent numbersIntent = new Intent(MainActivity.this, NumbersActivity.class);
-
+                Toast.makeText(view.getContext(),"Open list of numbers",Toast.LENGTH_SHORT).show();
                 // Start the new activity
                 startActivity(numbersIntent);
             }
