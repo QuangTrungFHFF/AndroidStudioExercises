@@ -31,16 +31,16 @@ public class NumbersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
 
-        englishNumbers.add(new Word("one","lutti"));
-        englishNumbers.add(new Word("two","otiiko"));
-        englishNumbers.add(new Word("three","tolookosu"));
-        englishNumbers.add(new Word("four","oyyisa"));
-        englishNumbers.add(new Word("five","massokka"));
-        englishNumbers.add(new Word("six","temmokka"));
-        englishNumbers.add(new Word("seven","kenekaku"));
-        englishNumbers.add(new Word("eight","kawinta"));
-        englishNumbers.add(new Word("nine","wo’e"));
-        englishNumbers.add(new Word("ten","na’aacha"));
+        englishNumbers.add(new Word("one","lutti", R.drawable.number_one));
+        englishNumbers.add(new Word("two","otiiko", R.drawable.number_two));
+        englishNumbers.add(new Word("three","tolookosu", R.drawable.number_three));
+        englishNumbers.add(new Word("four","oyyisa", R.drawable.number_four));
+        englishNumbers.add(new Word("five","massokka", R.drawable.number_five));
+        englishNumbers.add(new Word("six","temmokka", R.drawable.number_six));
+        englishNumbers.add(new Word("seven","kenekaku", R.drawable.number_seven));
+        englishNumbers.add(new Word("eight","kawinta", R.drawable.number_eight));
+        englishNumbers.add(new Word("nine","wo’e", R.drawable.number_nine));
+        englishNumbers.add(new Word("ten","na’aacha", R.drawable.number_ten));
 
 
 

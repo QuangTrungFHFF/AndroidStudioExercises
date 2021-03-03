@@ -47,6 +47,10 @@ public class WordAdapter extends ArrayAdapter<Word> {
         // set this text on the number TextView
         miwokTextView.setText(currentWord.getmMiwokTranslation());
 
+        ImageView imageView = (ImageView)listItemView.findViewById(R.id.image_view);
+
+        imageView.setImageResource(currentWord.getmImageResourceId());
+
         // Return the whole list item layout (containing 2 TextViews)
         // so that it can be shown in the ListView
         return listItemView;
