@@ -2,15 +2,19 @@ package com.example.android.miwok;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
@@ -18,8 +22,10 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
     private static final String LOG_TAG = ArrayAdapter.class.getSimpleName();
 
-    public WordAdapter(Activity context, ArrayList<Word> words) {
+    private int colorId;
+    public WordAdapter(Activity context, ArrayList<Word> words, int colorId) {
         super(context,0, words);
+        this.colorId = colorId;
     }
 
     @NonNull
@@ -49,6 +55,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         ImageView imageView = (ImageView)listItemView.findViewById(R.id.image_view);
 
+
         if(currentWord.hasImage())
         {
             imageView.setImageResource(currentWord.getmImageResourceId());
@@ -58,6 +65,9 @@ public class WordAdapter extends ArrayAdapter<Word> {
             imageView.setVisibility(View.GONE);
         }
 
+        LinearLayout linearLayout = (LinearLayout)listItemView.findViewById(R.id.translate_layout);
+        int color = ContextCompat.getColor(getContext(),colorId);
+        linearLayout.setBackgroundColor(color);
 
 
         // Return the whole list item layout (containing 2 TextViews)
