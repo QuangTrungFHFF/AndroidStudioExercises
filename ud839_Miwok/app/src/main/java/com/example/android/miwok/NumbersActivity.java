@@ -17,6 +17,8 @@ package com.example.android.miwok;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -31,6 +33,26 @@ import java.util.ArrayList;
 public class NumbersActivity extends AppCompatActivity {
 
     private ArrayList<Word> englishNumbers = new ArrayList<Word>();
+
+    private AudioManager mAudioManager;
+    private AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            if(focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK)
+            {
+                mediaPlayer.pause();
+                mediaPlayer.seekTo(0);
+            }
+            else if (focusChange == AudioManager.AUDIOFOCUS_GAIN)
+            {
+                mediaPlayer.start();
+            }
+            else if (focusChange == AudioManager.AUDIOFOCUS_LOSS)
+            {
+                releaseMediaPlayer();
+            }
+        }
+    };
     private MediaPlayer mediaPlayer;
     private MediaPlayer.OnCompletionListener mMediaOnCompletetionListener = new MediaPlayer.OnCompletionListener() {
         @Override
@@ -44,6 +66,7 @@ public class NumbersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
 
+        mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 
         englishNumbers.add(new Word("one","lutti",R.raw.number_one, R.drawable.number_one));
         englishNumbers.add(new Word("two","otiiko",R.raw.number_two, R.drawable.number_two));
@@ -61,17 +84,23 @@ public class NumbersActivity extends AppCompatActivity {
         // Get a reference to the ListView, and attach the adapter to the listView.
         //ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(wordAdapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
+
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 int audioId = englishNumbers.get(position).getAudioResourceId();
                     if(audioId>=0) {
                         releaseMediaPlayer();
-                        mediaPlayer = MediaPlayer.create(getApplicationContext(), audioId);
-                        mediaPlayer.start();
-                        mediaPlayer.setOnCompletionListener(mMediaOnCompletetionListener);
+
+                        int request = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,AudioManager.STREAM_MUSIC,AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                        if(request == AudioManager.AUDIOFOCUS_REQUEST_GRANTED)
+                        {
+                            mediaPlayer = MediaPlayer.create(getApplicationContext(), audioId);
+                            mediaPlayer.start();
+                            mediaPlayer.setOnCompletionListener(mMediaOnCompletetionListener);
+                        }
+
                     }
             }
         });
@@ -83,6 +112,7 @@ public class NumbersActivity extends AppCompatActivity {
         {
             mediaPlayer.release();
             mediaPlayer = null;
+            mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
         }
     }
     @Override
