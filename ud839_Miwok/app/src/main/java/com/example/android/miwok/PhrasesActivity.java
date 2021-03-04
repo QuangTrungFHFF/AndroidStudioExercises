@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -52,13 +53,31 @@ public class PhrasesActivity extends AppCompatActivity {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 int audioId = phraseList.get(position).getAudioResourceId();
                 if(audioId>=0){
+                    releaseMediaPlayer();
                     mediaPlayer =MediaPlayer.create(PhrasesActivity.this,audioId);
                     mediaPlayer.start();
+
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            releaseMediaPlayer();
+                            Toast.makeText(getApplicationContext(),phraseList.get(position).getmMiwokTranslation().toString(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
     }
+
+    private void releaseMediaPlayer(){
+        if(mediaPlayer!= null)
+        {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
 }
