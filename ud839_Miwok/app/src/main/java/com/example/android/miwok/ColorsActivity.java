@@ -28,7 +28,14 @@ import java.util.ArrayList;
 
 public class ColorsActivity extends AppCompatActivity {
 
-    MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
+    private MediaPlayer.OnCompletionListener mMediaOnCompletetionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            releaseMediaPlayer();
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,17 +68,22 @@ public class ColorsActivity extends AppCompatActivity {
                     mediaPlayer = MediaPlayer.create(ColorsActivity.this,audioId);
                     mediaPlayer.start();
 
-                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
-                            releaseMediaPlayer();
-                            Toast.makeText(getApplicationContext(),colorList.get(position).getmMiwokTranslation().toString(),Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    mediaPlayer.setOnCompletionListener(mMediaOnCompletetionListener);
                 }
             }
         });
 
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        releaseMediaPlayer();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        releaseMediaPlayer();
     }
 
     private void releaseMediaPlayer(){

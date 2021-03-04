@@ -30,13 +30,20 @@ import java.util.ArrayList;
 
 public class NumbersActivity extends AppCompatActivity {
 
-    ArrayList<Word> englishNumbers = new ArrayList<Word>();
-    LinearLayout rootView;
-    MediaPlayer mediaPlayer;
+    private ArrayList<Word> englishNumbers = new ArrayList<Word>();
+    private MediaPlayer mediaPlayer;
+    private MediaPlayer.OnCompletionListener mMediaOnCompletetionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            releaseMediaPlayer();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
+
 
         englishNumbers.add(new Word("one","lutti",R.raw.number_one, R.drawable.number_one));
         englishNumbers.add(new Word("two","otiiko",R.raw.number_two, R.drawable.number_two));
@@ -64,23 +71,10 @@ public class NumbersActivity extends AppCompatActivity {
                         releaseMediaPlayer();
                         mediaPlayer = MediaPlayer.create(getApplicationContext(), audioId);
                         mediaPlayer.start();
-
-                        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                            @Override
-                            public void onCompletion(MediaPlayer mp) {
-                                releaseMediaPlayer();
-                                Toast.makeText(getApplicationContext(),englishNumbers.get(position).getmMiwokTranslation().toString(),Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
+                        mediaPlayer.setOnCompletionListener(mMediaOnCompletetionListener);
                     }
-
             }
         });
-
-
-
-
 
     }
 
@@ -90,6 +84,17 @@ public class NumbersActivity extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        releaseMediaPlayer();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        releaseMediaPlayer();
     }
 
 

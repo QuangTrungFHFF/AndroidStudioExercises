@@ -28,7 +28,14 @@ import java.util.ArrayList;
 
 public class PhrasesActivity extends AppCompatActivity {
 
-    MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
+    private MediaPlayer.OnCompletionListener mMediaOnCompletetionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            releaseMediaPlayer();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,16 +67,22 @@ public class PhrasesActivity extends AppCompatActivity {
                     mediaPlayer =MediaPlayer.create(PhrasesActivity.this,audioId);
                     mediaPlayer.start();
 
-                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
-                            releaseMediaPlayer();
-                            Toast.makeText(getApplicationContext(),phraseList.get(position).getmMiwokTranslation().toString(),Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    mediaPlayer.setOnCompletionListener(mMediaOnCompletetionListener);
                 }
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        releaseMediaPlayer();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        releaseMediaPlayer();
     }
 
     private void releaseMediaPlayer(){
