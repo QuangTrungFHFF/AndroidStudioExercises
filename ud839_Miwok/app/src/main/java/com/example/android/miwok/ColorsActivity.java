@@ -16,21 +16,25 @@
 package com.example.android.miwok;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class ColorsActivity extends AppCompatActivity {
 
-
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
 
-        ArrayList<Word> colorList = new ArrayList<Word>();
+        final ArrayList<Word> colorList = new ArrayList<Word>();
         colorList.add(new Word("red","weṭeṭṭi",R.raw.color_red, R.drawable.color_red));
         colorList.add(new Word("green","chokokki",R.raw.color_green, R.drawable.color_green));
         colorList.add(new Word("brown","ṭakaakki",R.raw.color_brown, R.drawable.color_brown));
@@ -45,6 +49,18 @@ public class ColorsActivity extends AppCompatActivity {
         // Get a reference to the ListView, and attach the adapter to the listView.
         ListView listView = (ListView)findViewById(R.id.list);
         listView.setAdapter(wordAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int audioId = colorList.get(position).getAudioResourceId();
+                if(audioId>=0)
+                {
+                    mediaPlayer = MediaPlayer.create(ColorsActivity.this,audioId);
+                    mediaPlayer.start();
+                }
+            }
+        });
 
     }
 }
