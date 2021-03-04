@@ -32,21 +32,22 @@ public class NumbersActivity extends AppCompatActivity {
 
     ArrayList<Word> englishNumbers = new ArrayList<Word>();
     LinearLayout rootView;
+    MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
 
-        englishNumbers.add(new Word("one","lutti","number_one", R.drawable.number_one));
-        englishNumbers.add(new Word("two","otiiko","number_two", R.drawable.number_two));
-        englishNumbers.add(new Word("three","tolookosu","number_three", R.drawable.number_three));
-        englishNumbers.add(new Word("four","oyyisa","number_four", R.drawable.number_four));
-        englishNumbers.add(new Word("five","massokka","number_five", R.drawable.number_five));
-        englishNumbers.add(new Word("six","temmokka","number_six", R.drawable.number_six));
-        englishNumbers.add(new Word("seven","kenekaku","number_seven", R.drawable.number_seven));
-        englishNumbers.add(new Word("eight","kawinta","number_eight", R.drawable.number_eight));
-        englishNumbers.add(new Word("nine","wo’e","number_nine", R.drawable.number_nine));
-        englishNumbers.add(new Word("ten","na’aacha","number_ten", R.drawable.number_ten));
+        englishNumbers.add(new Word("one","lutti",R.raw.number_one, R.drawable.number_one));
+        englishNumbers.add(new Word("two","otiiko",R.raw.number_two, R.drawable.number_two));
+        englishNumbers.add(new Word("three","tolookosu",R.raw.number_three, R.drawable.number_three));
+        englishNumbers.add(new Word("four","oyyisa",R.raw.number_four, R.drawable.number_four));
+        englishNumbers.add(new Word("five","massokka",R.raw.number_five, R.drawable.number_five));
+        englishNumbers.add(new Word("six","temmokka",R.raw.number_six, R.drawable.number_six));
+        englishNumbers.add(new Word("seven","kenekaku",R.raw.number_seven, R.drawable.number_seven));
+        englishNumbers.add(new Word("eight","kawinta",R.raw.number_eight, R.drawable.number_eight));
+        englishNumbers.add(new Word("nine","wo’e",R.raw.number_nine, R.drawable.number_nine));
+        englishNumbers.add(new Word("ten","na’aacha",R.raw.number_ten, R.drawable.number_ten));
 
         ListView listView = (ListView)findViewById(R.id.list);
         WordAdapter wordAdapter = new WordAdapter(this, englishNumbers, R.color.category_numbers);
@@ -58,13 +59,13 @@ public class NumbersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    int resID = getAudioIdFromName(englishNumbers.get(position).getAudioName());
-                    if(resID != 0){
-                        MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(),resID);
+                int audioId = englishNumbers.get(position).getAudioResourceId();
+                    if(audioId>=0) {
+                        mediaPlayer = MediaPlayer.create(getApplicationContext(), audioId);
                         mediaPlayer.start();
-                    }
 
-                Toast.makeText(getApplicationContext(),englishNumbers.get(position).getmDefaultTranslation().toString(),Toast.LENGTH_SHORT).show();
+                    }
+                    Toast.makeText(getApplicationContext(),englishNumbers.get(position).getmDefaultTranslation().toString(),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -72,11 +73,11 @@ public class NumbersActivity extends AppCompatActivity {
     }
 
 
-    private int getAudioIdFromName(String songname)
-    {
-        int resId =0;
-        resId = getResources().getIdentifier(songname,"raw",getPackageName());
-        return resId;
-    }
+//    private int getAudioIdFromName(String songname)
+//    {
+//        int resId =0;
+//        resId = getResources().getIdentifier(songname,"raw",getPackageName());
+//        return resId;
+//    }
 
 }

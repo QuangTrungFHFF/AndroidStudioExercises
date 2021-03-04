@@ -3,33 +3,30 @@ package com.example.android.miwok;
 public class Word {
     private String mDefaultTranslation;
     private String mMiwokTranslation;
-    private String audioName = NO_AUDIO_PROVIDED;
+    //private String audioName = NO_AUDIO_PROVIDED;
+    private int mAudioResourceId = NO_AUDIO_PROVIDED;
     private int mImageResourceId = NO_IMAGE_PROVIDED;
     private static final int NO_IMAGE_PROVIDED = -1;
-    private static final String NO_AUDIO_PROVIDED = "NO AUDIO";
+    //private static final String NO_AUDIO_PROVIDED = "NO AUDIO";
+    private static final int NO_AUDIO_PROVIDED = -1;
 
     public Word(String mDefaultTranslation, String mMiwokTranslation) {
         this.mDefaultTranslation = mDefaultTranslation;
         this.mMiwokTranslation = mMiwokTranslation;
     }
 
-    public Word(String mDefaultTranslation, String mMiwokTranslation, String audioName) {
+    public Word(String mDefaultTranslation, String mMiwokTranslation, int mAudioResourceId) {
         this.mDefaultTranslation = mDefaultTranslation;
         this.mMiwokTranslation = mMiwokTranslation;
-        this.audioName = audioName;
+        this.mAudioResourceId = mAudioResourceId;
     }
 
-    public Word(String mDefaultTranslation, String mMiwokTranslation, String audioName, int mImageResourceId) {
-        this.mDefaultTranslation = mDefaultTranslation;
-        this.mMiwokTranslation = mMiwokTranslation;
-        this.audioName = audioName;
-        this.mImageResourceId = mImageResourceId;
-    }
 
-    public Word(String mDefaultTranslation, String mMiwokTranslation, int mImageResourceId) {
+    public Word(String mDefaultTranslation, String mMiwokTranslation,int mAudioResourceId, int mImageResourceId) {
         this.mDefaultTranslation = mDefaultTranslation;
         this.mMiwokTranslation = mMiwokTranslation;
         this.mImageResourceId = mImageResourceId;
+        this.mAudioResourceId = mAudioResourceId;
     }
 
     public String getmDefaultTranslation(){
@@ -49,7 +46,11 @@ public class Word {
         return mImageResourceId!= NO_IMAGE_PROVIDED;
     }
 
-    public String getAudioName() {
-        return audioName;
+    public int getAudioResourceId() {
+        return mAudioResourceId;
     }
+
+    //    public String getAudioName() {
+//        return audioName;
+//    }
 }
