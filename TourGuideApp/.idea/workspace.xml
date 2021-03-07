@@ -25,85 +25,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="580e38ce-4ed1-4946-bbc9-681bb82e9cb9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/proguard-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/androidTest/java/com/example/tourguideapp/ExampleInstrumentedTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/CustomFragmentPagerAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/MainActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/MondayFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/TuesdayFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/WednesdayFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_monday.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_tuesday.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_wednesday.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/values-night/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/test/java/com/example/tourguideapp/ExampleUnitTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/CONTRIBUTING.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/proguard-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/java/com/example/android/viewpager/MainActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/java/com/example/android/viewpager/MondayFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/java/com/example/android/viewpager/SimpleFragmentPagerAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/java/com/example/android/viewpager/TuesdayFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/java/com/example/android/viewpager/WednesdayFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/layout/fragment_monday.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/layout/fragment_tuesday.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/layout/fragment_wednesday.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/values/dimens.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/app/src/main/res/values/styles.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ud839_ViewPager_Example-quiz/settings.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -111,11 +33,23 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[JUC7N18725022436]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -232,6 +166,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1615114412638">
