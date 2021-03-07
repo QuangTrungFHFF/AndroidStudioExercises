@@ -25,6 +25,8 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager)findViewById(R.id.main_viewpager);
         CustomFragmentPagerAdapter customFragmentPagerAdapter = new CustomFragmentPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(customFragmentPagerAdapter);
+
+        TabLayout tabLayout = (TabLayout)findViewById(R.id.main_tablayout);
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 }
