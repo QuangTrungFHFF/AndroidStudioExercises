@@ -5,6 +5,10 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -25,20 +29,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="580e38ce-4ed1-4946-bbc9-681bb82e9cb9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/CustomArrayAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/PostCard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/PostCardsActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/postcard_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/postcards_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/frankfurt.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/CustomArrayAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/CustomArrayAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/PostCardsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tourguideapp/PostCardsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/postcard_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/postcard_item.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_4_XL_API_30]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -74,9 +79,10 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ListViewExample" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -175,16 +181,40 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1615331782518">
+    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1615331869561">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser/-1440.-701.1440.2520/0.0.1920.1040@0.0.1920.1040" timestamp="1615331782518" />
+    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser/-1440.-701.1440.2520/0.0.1920.1040@0.0.1920.1040" timestamp="1615331869561" />
     <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1615114412638" />
+    <state x="540" y="274" key="AndroidCreateResourceDirectoryDialog" timestamp="1615333016332">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="540" y="274" key="AndroidCreateResourceDirectoryDialog/-1440.-701.1440.2520/0.0.1920.1040@0.0.1920.1040" timestamp="1615333016332" />
     <state x="540" y="274" key="AndroidCreateResourceFileDialog" timestamp="1615331175590">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="540" y="274" key="AndroidCreateResourceFileDialog/-1440.-701.1440.2520/0.0.1920.1040@0.0.1920.1040" timestamp="1615331175590" />
     <state x="540" y="274" key="AndroidCreateResourceFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615112539310" />
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1615331932484">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="274" key="FileChooserDialogImpl/-1440.-701.1440.2520/0.0.1920.1040@0.0.1920.1040" timestamp="1615331932484" />
+    <state width="1859" height="237" key="GridCell.Tab.0.bottom" timestamp="1615334120334">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1859" height="237" key="GridCell.Tab.0.bottom/-1440.-701.1440.2520/0.0.1920.1040@0.0.1920.1040" timestamp="1615334120334" />
+    <state width="1859" height="237" key="GridCell.Tab.0.center" timestamp="1615334120333">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1859" height="237" key="GridCell.Tab.0.center/-1440.-701.1440.2520/0.0.1920.1040@0.0.1920.1040" timestamp="1615334120333" />
+    <state width="1859" height="237" key="GridCell.Tab.0.left" timestamp="1615334120333">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1859" height="237" key="GridCell.Tab.0.left/-1440.-701.1440.2520/0.0.1920.1040@0.0.1920.1040" timestamp="1615334120333" />
+    <state width="1859" height="237" key="GridCell.Tab.0.right" timestamp="1615334120334">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1859" height="237" key="GridCell.Tab.0.right/-1440.-701.1440.2520/0.0.1920.1040@0.0.1920.1040" timestamp="1615334120334" />
     <state x="92" y="92" width="1736" height="856" key="ShowDiffWithBranchDialog" timestamp="1615119010773">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
