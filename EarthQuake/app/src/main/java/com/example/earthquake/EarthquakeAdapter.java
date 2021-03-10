@@ -36,8 +36,10 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Vi
 
         EarthquakeInfo earthquakeInfo = earthquakeInfoList.get(position);
         holder.mMag.setText(String.valueOf(earthquakeInfo.getMag()));
-        holder.mLocation.setText(earthquakeInfo.getLocation());
-        holder.mDate.setText(getFormattedTime(earthquakeInfo.getDate()));
+        holder.mLocation.setText(getFormattedLocationText(earthquakeInfo.getLocation()));
+        holder.mCity.setText(getFormattedLocationCity(earthquakeInfo.getLocation()));
+        holder.mDate.setText(getFormattedDate(earthquakeInfo.getDate()));
+        holder.mTime.setText(getFormattedTime(earthquakeInfo.getDate()));
 
     }
 
@@ -49,22 +51,64 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mMag;
         public TextView mLocation;
+        public TextView mCity;
         public TextView mDate;
+        public TextView mTime;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mMag = (TextView)itemView.findViewById(R.id.mag_textview);
             mLocation = (TextView)itemView.findViewById(R.id.location_textview);
+            mCity = (TextView)itemView.findViewById(R.id.city_textview);
             mDate = (TextView)itemView.findViewById(R.id.date_textview);
+            mTime = (TextView)itemView.findViewById(R.id.time_textview);
         }
     }
 
 
-    private String getFormattedTime(long time){
+    private String getFormattedDate(long time){
         String date="";
         Date dateObject = new Date(time);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM DD, yyyy");
         date = simpleDateFormat.format(dateObject);
         return date;
+    }
+
+    private String getFormattedTime(long time){
+        String date="";
+        Date dateObject = new Date(time);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
+        date = simpleDateFormat.format(dateObject);
+        return date;
+    }
+
+    private String getFormattedLocationCity(String location){
+        String result ="";
+        String segments[] = location.split(" ");
+        if(segments.length >1){
+            result = segments[segments.length -2]+ " " + segments[segments.length-1];
+        }
+        else{
+            result = location;
+        }
+
+        return result.trim();
+    }
+
+    private String getFormattedLocationText(String location){
+        String result ="";
+        String segments[] = location.split(" ");
+        if(segments.length>2){
+            for(int i =0; i<(segments.length-2);i++)
+            {
+                result += segments[i] + " ";
+            }
+        }
+        else{
+            result ="Near the";
+        }
+
+        return result.trim();
     }
 }

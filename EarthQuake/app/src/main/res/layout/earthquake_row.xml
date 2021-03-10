@@ -33,24 +33,46 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/location_textview"
+
         app:layout_constraintLeft_toLeftOf="@id/guideline_first"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/city_textview"
         app:layout_constraintRight_toRightOf="@id/guideline_second"
-        android:text="Tokyo"
+        android:text="none"
         android:paddingLeft="16dp"
         />
+
+    <TextView
+        android:id="@+id/city_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:text="Tokyo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_first"
+        app:layout_constraintRight_toRightOf="@id/guideline_second"
+         />
+
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/date_textview"
         app:layout_constraintLeft_toRightOf="@id/guideline_second"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/time_textview"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread"
         android:text="15/01"
         android:paddingLeft="16dp"
         />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_textview"
+        app:layout_constraintLeft_toRightOf="@id/guideline_second"
+        app:layout_constraintTop_toBottomOf="@id/date_textview"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="15/01"
+        android:paddingLeft="16dp"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
