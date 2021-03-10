@@ -5,37 +5,52 @@
     android:minHeight="88dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline_first"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline_second"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7"/>
+
+    <TextView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/mag_textview"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintRight_toRightOf="@id/guideline_first"
         android:text="5.5"
+        android:paddingLeft="16dp"
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/location_textview"
-        app:layout_constraintLeft_toRightOf="@id/mag_textview"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_first"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/date_textview"
-        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintRight_toRightOf="@id/guideline_second"
         android:text="Tokyo"
+        android:paddingLeft="16dp"
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/date_textview"
-        app:layout_constraintLeft_toRightOf="@id/location_textview"
+        app:layout_constraintLeft_toRightOf="@id/guideline_second"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
         android:text="15/01"
+        android:paddingLeft="16dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

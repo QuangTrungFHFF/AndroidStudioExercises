@@ -10,14 +10,14 @@ import java.util.ArrayList;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
-    ArrayList<EarthquakeInfo> earthquakeInfoArrayList;
+    ArrayList<EarthquakeInfo> earthquakeInfoArrayList = new ArrayList<EarthquakeInfo>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
-        earthquakeInfoArrayList = createEarthquakeList();
-
+        //earthquakeInfoArrayList = createEarthquakeList();
+        earthquakeInfoArrayList = QueryUtils.extractEarthquakes();
         RecyclerView rvEarthquake = (RecyclerView)findViewById(R.id.earthquake_rv);
 
         EarthquakeAdapter earthquakeAdapter = new EarthquakeAdapter(earthquakeInfoArrayList);

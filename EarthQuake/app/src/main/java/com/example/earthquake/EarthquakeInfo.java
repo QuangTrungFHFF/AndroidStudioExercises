@@ -4,9 +4,9 @@ public class EarthquakeInfo {
 
     private double mMag;
     private String mLocation;
-    private int mDate;
+    private long mDate;
 
-    public EarthquakeInfo(double mag, String location, int date) {
+    public EarthquakeInfo(double mag, String location, long date) {
         this.mMag = mag;
         this.mLocation = location;
         this.mDate = date;
@@ -16,7 +16,7 @@ public class EarthquakeInfo {
         return mMag;
     }
 
-    public int getDate() {
+    public long getDate() {
         return mDate;
     }
 
