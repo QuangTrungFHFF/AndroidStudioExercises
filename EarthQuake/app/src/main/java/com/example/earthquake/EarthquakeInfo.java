@@ -2,34 +2,34 @@ package com.example.earthquake;
 
 public class EarthquakeInfo {
 
-    private double mag;
-    private String location;
-    private String date;
+    private double mMag;
+    private String mLocation;
+    private int mDate;
 
-    public EarthquakeInfo(double mag, String location, String date) {
-        this.mag = mag;
-        this.location = location;
-        this.date = date;
+    public EarthquakeInfo(double mag, String location, int date) {
+        this.mMag = mag;
+        this.mLocation = location;
+        this.mDate = date;
     }
 
     public double getMag() {
-        return mag;
+        return mMag;
     }
 
-    public String getDate() {
-        return date;
+    public int getDate() {
+        return mDate;
     }
 
     public String getLocation() {
-        return location;
+        return mLocation;
     }
 
     @Override
     public String toString() {
         return "EarthquakeInfo{" +
-                "mag=" + mag +
-                ", location='" + location + '\'' +
-                ", date='" + date + '\'' +
+                "mag=" + mMag +
+                ", location='" + mLocation + '\'' +
+                ", date='" + mDate + '\'' +
                 '}';
     }
 }
