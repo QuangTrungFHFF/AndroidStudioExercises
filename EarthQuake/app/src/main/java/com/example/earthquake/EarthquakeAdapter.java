@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.ViewHolder> {
@@ -35,7 +37,7 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Vi
         EarthquakeInfo earthquakeInfo = earthquakeInfoList.get(position);
         holder.mMag.setText(String.valueOf(earthquakeInfo.getMag()));
         holder.mLocation.setText(earthquakeInfo.getLocation());
-        holder.mDate.setText(String.valueOf(earthquakeInfo.getDate()));
+        holder.mDate.setText(getFormattedTime(earthquakeInfo.getDate()));
 
     }
 
@@ -55,5 +57,14 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Vi
             mLocation = (TextView)itemView.findViewById(R.id.location_textview);
             mDate = (TextView)itemView.findViewById(R.id.date_textview);
         }
+    }
+
+
+    private String getFormattedTime(long time){
+        String date="";
+        Date dateObject = new Date(time);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM DD, yyyy");
+        date = simpleDateFormat.format(dateObject);
+        return date;
     }
 }
