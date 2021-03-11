@@ -1,12 +1,15 @@
 package com.example.earthquake;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DecimalFormat;
@@ -17,9 +20,10 @@ import java.util.List;
 public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.ViewHolder> {
 
     private List<EarthquakeInfo> earthquakeInfoList;
-
-    public EarthquakeAdapter(List<EarthquakeInfo> earthquakeInfoList) {
+    private Context context;
+    public EarthquakeAdapter(Context context,List<EarthquakeInfo> earthquakeInfoList) {
         this.earthquakeInfoList = earthquakeInfoList;
+        this.context = context;
     }
 
     @NonNull
@@ -36,13 +40,19 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         EarthquakeInfo earthquakeInfo = earthquakeInfoList.get(position);
+
         holder.mMag.setText(getFormattedMag(earthquakeInfo.getMag()));
+        GradientDrawable gradientDrawable = (GradientDrawable)holder.mMag.getBackground();
+        gradientDrawable.setColor(getMagnitudeColor(earthquakeInfo.getMag()));
+
+
         holder.mLocation.setText(getFormattedLocationText(earthquakeInfo.getLocation()));
         holder.mCity.setText(getFormattedLocationCity(earthquakeInfo.getLocation()));
         holder.mDate.setText(getFormattedDate(earthquakeInfo.getDate()));
         holder.mTime.setText(getFormattedTime(earthquakeInfo.getDate()));
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -114,8 +124,49 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Vi
     }
 
     private String getFormattedMag(double mag){
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
         String output = decimalFormat.format(mag);
         return output;
+    }
+
+    private int getMagnitudeColor(double mag)
+    {
+        int magnitudeResourceId;
+        int magnitudeFloor = (int)Math.floor(mag);
+        Log.e("color",String.valueOf(magnitudeFloor));
+        switch (magnitudeFloor){
+            case 0:
+            case 1:
+                magnitudeResourceId = R.color.magnitude1;
+                break;
+            case 2:
+                magnitudeResourceId = R.color.magnitude2;
+                break;
+            case 3:
+                magnitudeResourceId = R.color.magnitude3;
+                break;
+            case 4:
+                magnitudeResourceId = R.color.magnitude4;
+                break;
+            case 5:
+                magnitudeResourceId = R.color.magnitude5;
+                break;
+            case 6:
+                magnitudeResourceId = R.color.magnitude6;
+                break;
+            case 7:
+                magnitudeResourceId = R.color.magnitude7;
+                break;
+            case 8:
+                magnitudeResourceId = R.color.magnitude8;
+                break;
+            case 9:
+                magnitudeResourceId = R.color.magnitude9;
+                break;
+            default:
+                magnitudeResourceId =R.color.magnitude10plus;
+                break;
+        }
+        return context.getColor(magnitudeResourceId);
     }
 }

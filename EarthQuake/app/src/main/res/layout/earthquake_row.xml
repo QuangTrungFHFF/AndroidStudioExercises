@@ -2,15 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="88dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guideline_first"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.3"/>
+
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,52 +15,64 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:minWidth="40dp"
+        android:minHeight="40dp"
         android:id="@+id/mag_textview"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="@id/guideline_first"
+        android:layout_margin="8dp"
         android:text="5.5"
-        android:paddingLeft="16dp"
+        android:background="@drawable/magnitude_circle"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
         />
     <TextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/location_textview"
-
-        app:layout_constraintLeft_toLeftOf="@id/guideline_first"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/mag_textview"
         app:layout_constraintBottom_toTopOf="@id/city_textview"
         app:layout_constraintRight_toRightOf="@id/guideline_second"
+        android:gravity="bottom"
         android:text="none"
         android:paddingLeft="16dp"
+
         />
 
     <TextView
         android:id="@+id/city_textview"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:paddingLeft="16dp"
         android:text="Tokyo"
+        android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/guideline_first"
+        app:layout_constraintLeft_toRightOf="@id/mag_textview"
         app:layout_constraintRight_toRightOf="@id/guideline_second"
+        app:layout_constraintTop_toBottomOf="@id/location_textview"
          />
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/date_textview"
-        app:layout_constraintLeft_toRightOf="@id/guideline_second"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/guideline_second"
         app:layout_constraintBottom_toTopOf="@id/time_textview"
         app:layout_constraintRight_toRightOf="parent"
+        android:gravity="bottom"
         android:text="15/01"
         android:paddingLeft="16dp"
         />
     <TextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/time_textview"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/guideline_second"
         app:layout_constraintTop_toBottomOf="@id/date_textview"
         app:layout_constraintRight_toRightOf="parent"

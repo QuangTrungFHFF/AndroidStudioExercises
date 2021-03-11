@@ -20,7 +20,7 @@ public class EarthquakeActivity extends AppCompatActivity {
         earthquakeInfoArrayList = QueryUtils.extractEarthquakes();
         RecyclerView rvEarthquake = (RecyclerView)findViewById(R.id.earthquake_rv);
 
-        EarthquakeAdapter earthquakeAdapter = new EarthquakeAdapter(earthquakeInfoArrayList);
+        EarthquakeAdapter earthquakeAdapter = new EarthquakeAdapter(this,earthquakeInfoArrayList);
         rvEarthquake.setAdapter(earthquakeAdapter);
         rvEarthquake.setLayoutManager(new LinearLayoutManager(this));
 
