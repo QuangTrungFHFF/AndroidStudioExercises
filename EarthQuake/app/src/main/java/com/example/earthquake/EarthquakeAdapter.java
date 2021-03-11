@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +36,7 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         EarthquakeInfo earthquakeInfo = earthquakeInfoList.get(position);
-        holder.mMag.setText(String.valueOf(earthquakeInfo.getMag()));
+        holder.mMag.setText(getFormattedMag(earthquakeInfo.getMag()));
         holder.mLocation.setText(getFormattedLocationText(earthquakeInfo.getLocation()));
         holder.mCity.setText(getFormattedLocationCity(earthquakeInfo.getLocation()));
         holder.mDate.setText(getFormattedDate(earthquakeInfo.getDate()));
@@ -110,5 +111,11 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Vi
         }
 
         return result.trim();
+    }
+
+    private String getFormattedMag(double mag){
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        String output = decimalFormat.format(mag);
+        return output;
     }
 }
