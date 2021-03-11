@@ -21,9 +21,12 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Vi
 
     private List<EarthquakeInfo> earthquakeInfoList;
     private Context context;
-    public EarthquakeAdapter(Context context,List<EarthquakeInfo> earthquakeInfoList) {
+    private OnItemClickListener mOnItemClickListener;
+
+    public EarthquakeAdapter(Context context,List<EarthquakeInfo> earthquakeInfoList,OnItemClickListener mOnItemClickListener) {
         this.earthquakeInfoList = earthquakeInfoList;
         this.context = context;
+        this.mOnItemClickListener = mOnItemClickListener;
     }
 
     @NonNull
@@ -32,7 +35,7 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Vi
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.earthquake_row,parent,false);
-        ViewHolder viewHolder = new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view,mOnItemClickListener);
         return viewHolder;
     }
 
@@ -59,22 +62,36 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Vi
         return earthquakeInfoList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mMag;
         public TextView mLocation;
         public TextView mCity;
         public TextView mDate;
         public TextView mTime;
+        OnItemClickListener onItemClickListener;
 
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
             mMag = (TextView)itemView.findViewById(R.id.mag_textview);
             mLocation = (TextView)itemView.findViewById(R.id.location_textview);
             mCity = (TextView)itemView.findViewById(R.id.city_textview);
             mDate = (TextView)itemView.findViewById(R.id.date_textview);
             mTime = (TextView)itemView.findViewById(R.id.time_textview);
+            this.onItemClickListener = onItemClickListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onItemClickListener.onItemClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+
     }
 
 

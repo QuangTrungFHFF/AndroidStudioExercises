@@ -5,10 +5,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class EarthquakeActivity extends AppCompatActivity {
+public class EarthquakeActivity extends AppCompatActivity implements EarthquakeAdapter.OnItemClickListener {
 
     ArrayList<EarthquakeInfo> earthquakeInfoArrayList = new ArrayList<EarthquakeInfo>();
     @Override
@@ -20,7 +22,7 @@ public class EarthquakeActivity extends AppCompatActivity {
         earthquakeInfoArrayList = QueryUtils.extractEarthquakes();
         RecyclerView rvEarthquake = (RecyclerView)findViewById(R.id.earthquake_rv);
 
-        EarthquakeAdapter earthquakeAdapter = new EarthquakeAdapter(this,earthquakeInfoArrayList);
+        EarthquakeAdapter earthquakeAdapter = new EarthquakeAdapter(this,earthquakeInfoArrayList,this);
         rvEarthquake.setAdapter(earthquakeAdapter);
         rvEarthquake.setLayoutManager(new LinearLayoutManager(this));
 
@@ -41,4 +43,9 @@ public class EarthquakeActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick( int position) {
+        String text = earthquakeInfoArrayList.get(position).toString();
+        Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
+    }
 }
