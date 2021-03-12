@@ -6,12 +6,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 public class EarthquakeActivity extends AppCompatActivity implements EarthquakeAdapter.OnItemClickListener {
+
+    public static final String LOG_TAG = EarthquakeActivity.class.getSimpleName();
+
+    private static final String EARTHQUAKE_REQUEST_URL =
+            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
 
     ArrayList<EarthquakeInfo> earthquakeInfoArrayList = new ArrayList<EarthquakeInfo>();
     @Override
@@ -19,8 +34,9 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
-        //earthquakeInfoArrayList = createEarthquakeList();
+
         earthquakeInfoArrayList = QueryUtils.extractEarthquakes();
+
         RecyclerView rvEarthquake = (RecyclerView)findViewById(R.id.earthquake_rv);
 
         EarthquakeAdapter earthquakeAdapter = new EarthquakeAdapter(this,earthquakeInfoArrayList,this);
@@ -63,4 +79,73 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         }
 
     }
+
+    /**
+     * Generate URL object from given String
+     */
+    private URL createURL(String stringUrl){
+         URL url = null;
+        try {
+            url = new URL(stringUrl);
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "Error with creating URL", e);
+            return null;
+        }
+        return url;
+    }
+
+    /**
+     * Make Http request
+     */
+
+    private String makeHttpRequest(URL url){
+        String JSONresponse = "";
+
+        HttpURLConnection httpURLConnection = null;
+        InputStream inputStream = null;
+
+        try {
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setReadTimeout(10000);
+            httpURLConnection.setConnectTimeout(15000);
+            httpURLConnection.connect();
+            if(httpURLConnection.getResponseCode() == 200){
+                inputStream =httpURLConnection.getInputStream();
+                JSONresponse = readInputStream(inputStream);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return JSONresponse;
+    }
+
+    private String readInputStream(InputStream inputStream) throws IOException {
+        StringBuilder output = new StringBuilder();
+
+        if(inputStream!=null){
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
+            BufferedReader br = new BufferedReader(inputStreamReader);
+            String line = br.readLine();
+            while(line!= null){
+                output.append(line);
+                line = br.readLine();
+            }
+        }
+        return output.toString();
+    }
+    /**
+     * AsyncTask
+     */
+
+    private class httpRequestTask extends AsyncTask<URL,Void,ArrayList<EarthquakeInfo>{
+
+        @Override
+        protected ArrayList<EarthquakeInfo> doInBackground(URL... urls) {
+            return null;
+        }
+    }
+
 }

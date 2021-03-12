@@ -26,8 +26,11 @@ public class QueryUtils {
     private QueryUtils() {
     }
 
-    public static ArrayList<EarthquakeInfo> extractEarthquakes() {
+    public static ArrayList<EarthquakeInfo> extractEarthquakes(String jsonString) {
 
+        if (jsonString == null) {
+            return null;
+        }
         // Create an empty ArrayList that we can start adding earthquakes to
         ArrayList<EarthquakeInfo> earthquakes = new ArrayList<>();
         Log.e("Taf","Here <-------------------------------------------------");
@@ -37,7 +40,7 @@ public class QueryUtils {
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
 //
-            JSONObject root = new JSONObject(SAMPLE_JSON_RESPONSE);
+            JSONObject root = new JSONObject(jsonString);
             JSONArray feature = root.optJSONArray("features");
             for(int i = 0; i<feature.length();i++){
                 JSONObject earthquake = feature.optJSONObject(i);
