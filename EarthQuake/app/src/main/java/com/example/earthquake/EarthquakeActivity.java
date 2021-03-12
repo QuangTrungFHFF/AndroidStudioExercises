@@ -33,16 +33,22 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
+        //earthquakeInfoArrayList = QueryUtils.extractEarthquakes();
+
+        URL request = createURL(EARTHQUAKE_REQUEST_URL);
+        HttpRequestTask httpRequestTask = new HttpRequestTask();
+        httpRequestTask.execute(request);
 
 
-        earthquakeInfoArrayList = QueryUtils.extractEarthquakes();
+    }
 
+    private void updateUI(ArrayList<EarthquakeInfo> earthquakeInfos){
+        earthquakeInfoArrayList = earthquakeInfos;
         RecyclerView rvEarthquake = (RecyclerView)findViewById(R.id.earthquake_rv);
 
         EarthquakeAdapter earthquakeAdapter = new EarthquakeAdapter(this,earthquakeInfoArrayList,this);
         rvEarthquake.setAdapter(earthquakeAdapter);
         rvEarthquake.setLayoutManager(new LinearLayoutManager(this));
-
     }
 
 
@@ -140,11 +146,28 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
      * AsyncTask
      */
 
-    private class httpRequestTask extends AsyncTask<URL,Void,ArrayList<EarthquakeInfo>{
+    private class HttpRequestTask extends AsyncTask<URL,Void,ArrayList<EarthquakeInfo>>{
 
         @Override
         protected ArrayList<EarthquakeInfo> doInBackground(URL... urls) {
-            return null;
+            if(urls.length<1 || urls[0]== null){
+                return null;
+            }
+            String jsonEarthquakes = makeHttpRequest(urls[0]);
+            ArrayList<EarthquakeInfo> earthquakes;
+            earthquakes = QueryUtils.extractEarthquakes(jsonEarthquakes);
+            return earthquakes;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<EarthquakeInfo> earthquakeInfos) {
+            if(earthquakeInfos!=null){
+                updateUI(earthquakeInfos);
+            }
+            else
+            {
+                Log.e(LOG_TAG, "Error with update UI");
+            }
         }
     }
 
