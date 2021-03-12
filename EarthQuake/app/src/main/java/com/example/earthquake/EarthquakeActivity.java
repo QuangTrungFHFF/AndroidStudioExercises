@@ -4,8 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -33,11 +34,11 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
     private ArrayList<EarthquakeInfo> createEarthquakeList(){
         ArrayList<EarthquakeInfo> earthquakeInfoArrayList = new ArrayList<EarthquakeInfo>();
 
-        earthquakeInfoArrayList.add(new EarthquakeInfo(5.5,"Tokyo",145625478));
-        earthquakeInfoArrayList.add(new EarthquakeInfo(7.2,"Ha Noi",4525478));
-        earthquakeInfoArrayList.add(new EarthquakeInfo(4.5,"Berlin",1665625478));
-        earthquakeInfoArrayList.add(new EarthquakeInfo(5.6,"Paris",143123478));
-        earthquakeInfoArrayList.add(new EarthquakeInfo(5.8,"London",1433135478));
+        earthquakeInfoArrayList.add(new EarthquakeInfo(5.5,"Tokyo",145625478, "none"));
+        earthquakeInfoArrayList.add(new EarthquakeInfo(7.2,"Ha Noi",4525478, "none"));
+        earthquakeInfoArrayList.add(new EarthquakeInfo(4.5,"Berlin",1665625478, "none"));
+        earthquakeInfoArrayList.add(new EarthquakeInfo(5.6,"Paris",143123478, "none"));
+        earthquakeInfoArrayList.add(new EarthquakeInfo(5.8,"London",1433135478, "none"));
 
         return earthquakeInfoArrayList;
     }
@@ -45,7 +46,21 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
 
     @Override
     public void onItemClick( int position) {
-        String text = earthquakeInfoArrayList.get(position).toString();
+        EarthquakeInfo earthquake = earthquakeInfoArrayList.get(position);
+        String text = earthquake.toString();
         Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
+
+        String mUrl = earthquake.getmUrl();
+        openWebpage(mUrl);
+
+    }
+
+    private void openWebpage(String uri){
+        Uri webpage = Uri.parse(uri);
+        Intent intent = new Intent(Intent.ACTION_VIEW,webpage);
+        if(intent.resolveActivity(getPackageManager())!=null){
+            startActivity(intent);
+        }
+
     }
 }

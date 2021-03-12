@@ -42,10 +42,12 @@ public class QueryUtils {
             for(int i = 0; i<feature.length();i++){
                 JSONObject earthquake = feature.optJSONObject(i);
                 JSONObject properties = earthquake.optJSONObject("properties");
+
                 double mag = properties.getDouble("mag");
                 String location = properties.getString("place");
                 long time = properties.getLong("time");
-                earthquakes.add(new EarthquakeInfo(mag,location,time));
+                String Url = properties.getString("url");
+                earthquakes.add(new EarthquakeInfo(mag,location,time, Url));
             }
 
         } catch (JSONException e) {
