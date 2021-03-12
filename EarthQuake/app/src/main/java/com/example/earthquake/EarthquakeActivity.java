@@ -1,14 +1,22 @@
 package com.example.earthquake;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.AsyncTaskLoader;
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -20,13 +28,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
 
-public class EarthquakeActivity extends AppCompatActivity implements EarthquakeAdapter.OnItemClickListener {
+public class EarthquakeActivity extends AppCompatActivity implements EarthquakeAdapter.OnItemClickListener, LoaderManager.LoaderCallbacks<ArrayList<EarthquakeInfo>> {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getSimpleName();
 
+    private static final int EARTHQUAKE_LOADER_ID = 1;
+
     private static final String EARTHQUAKE_REQUEST_URL =
-            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
+            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=3&limit=25";
+
+    private EarthquakeAdapter mAdapter;
+    TextView emptyView;
+    RecyclerView rvEarthquake;
 
     ArrayList<EarthquakeInfo> earthquakeInfoArrayList = new ArrayList<EarthquakeInfo>();
     @Override
@@ -35,36 +50,42 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         setContentView(R.layout.earthquake_activity);
         //earthquakeInfoArrayList = QueryUtils.extractEarthquakes();
 
-        URL request = createURL(EARTHQUAKE_REQUEST_URL);
-        HttpRequestTask httpRequestTask = new HttpRequestTask();
-        httpRequestTask.execute(request);
+        /**HttpRequestTask httpRequestTask = new HttpRequestTask();
+        httpRequestTask.execute(EARTHQUAKE_REQUEST_URL);**/
+        rvEarthquake = (RecyclerView)findViewById(R.id.earthquake_rv);
+        emptyView = (TextView)findViewById(R.id.empty_view);
+
+        mAdapter = new EarthquakeAdapter(this,earthquakeInfoArrayList,this);
+        rvEarthquake.setAdapter(mAdapter);
+
+        rvEarthquake.setLayoutManager(new LinearLayoutManager(this));
+
+        //getSupportLoaderManager().initLoader(EARTHQUAKE_LOADER_ID, null, this);
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        loaderManager.initLoader(EARTHQUAKE_LOADER_ID,null,this);
 
 
     }
 
     private void updateUI(ArrayList<EarthquakeInfo> earthquakeInfos){
         earthquakeInfoArrayList = earthquakeInfos;
-        RecyclerView rvEarthquake = (RecyclerView)findViewById(R.id.earthquake_rv);
 
-        EarthquakeAdapter earthquakeAdapter = new EarthquakeAdapter(this,earthquakeInfoArrayList,this);
-        rvEarthquake.setAdapter(earthquakeAdapter);
+        if(earthquakeInfoArrayList.size() ==0){
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            emptyView.setVisibility(View.GONE);
+        }
+
+        //RecyclerView rvEarthquake = (RecyclerView)findViewById(R.id.earthquake_rv);
+
+        mAdapter = new EarthquakeAdapter(this,earthquakeInfoArrayList,this);
+        rvEarthquake.setAdapter(mAdapter);
         rvEarthquake.setLayoutManager(new LinearLayoutManager(this));
+
+
     }
-
-
-
-    private ArrayList<EarthquakeInfo> createEarthquakeList(){
-        ArrayList<EarthquakeInfo> earthquakeInfoArrayList = new ArrayList<EarthquakeInfo>();
-
-        earthquakeInfoArrayList.add(new EarthquakeInfo(5.5,"Tokyo",145625478, "none"));
-        earthquakeInfoArrayList.add(new EarthquakeInfo(7.2,"Ha Noi",4525478, "none"));
-        earthquakeInfoArrayList.add(new EarthquakeInfo(4.5,"Berlin",1665625478, "none"));
-        earthquakeInfoArrayList.add(new EarthquakeInfo(5.6,"Paris",143123478, "none"));
-        earthquakeInfoArrayList.add(new EarthquakeInfo(5.8,"London",1433135478, "none"));
-
-        return earthquakeInfoArrayList;
-    }
-
 
     @Override
     public void onItemClick( int position) {
@@ -86,76 +107,39 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
 
     }
 
-    /**
-     * Generate URL object from given String
-     */
-    private URL createURL(String stringUrl){
-         URL url = null;
-        try {
-            url = new URL(stringUrl);
-        } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Error with creating URL", e);
-            return null;
-        }
-        return url;
+
+
+    @NonNull
+    @Override
+    public Loader<ArrayList<EarthquakeInfo>> onCreateLoader(int id, @Nullable Bundle args) {
+        return new EarthquakeLoader(this,EARTHQUAKE_REQUEST_URL);
     }
 
-    /**
-     * Make Http request
-     */
-
-    private String makeHttpRequest(URL url){
-        String JSONresponse = "";
-
-        HttpURLConnection httpURLConnection = null;
-        InputStream inputStream = null;
-
-        try {
-            httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("GET");
-            httpURLConnection.setReadTimeout(10000);
-            httpURLConnection.setConnectTimeout(15000);
-            httpURLConnection.connect();
-            if(httpURLConnection.getResponseCode() == 200){
-                inputStream =httpURLConnection.getInputStream();
-                JSONresponse = readInputStream(inputStream);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return JSONresponse;
+    @Override
+    public void onLoadFinished(@NonNull Loader<ArrayList<EarthquakeInfo>> loader, ArrayList<EarthquakeInfo> data) {
+        updateUI(data);
     }
 
-    private String readInputStream(InputStream inputStream) throws IOException {
-        StringBuilder output = new StringBuilder();
-
-        if(inputStream!=null){
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
-            BufferedReader br = new BufferedReader(inputStreamReader);
-            String line = br.readLine();
-            while(line!= null){
-                output.append(line);
-                line = br.readLine();
-            }
-        }
-        return output.toString();
+    @Override
+    public void onLoaderReset(@NonNull Loader<ArrayList<EarthquakeInfo>> loader) {
+        mAdapter.clear();
     }
+
+
+
     /**
      * AsyncTask
      */
 
-    private class HttpRequestTask extends AsyncTask<URL,Void,ArrayList<EarthquakeInfo>>{
+    private class HttpRequestTask extends AsyncTask<String,Void,ArrayList<EarthquakeInfo>>{
 
         @Override
-        protected ArrayList<EarthquakeInfo> doInBackground(URL... urls) {
+        protected ArrayList<EarthquakeInfo> doInBackground(String... urls) {
             if(urls.length<1 || urls[0]== null){
                 return null;
             }
-            String jsonEarthquakes = makeHttpRequest(urls[0]);
             ArrayList<EarthquakeInfo> earthquakes;
-            earthquakes = QueryUtils.extractEarthquakes(jsonEarthquakes);
+            earthquakes = QueryUtils.extractEarthquakes(urls[0]);
             return earthquakes;
         }
 
@@ -170,5 +154,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
             }
         }
     }
+
+
 
 }

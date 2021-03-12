@@ -186,4 +186,10 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Vi
         }
         return context.getColor(magnitudeResourceId);
     }
+
+    public void clear() {
+        int size = earthquakeInfoList.size();
+        earthquakeInfoList.clear();
+        notifyItemRangeRemoved(0, size);
+    }
 }
