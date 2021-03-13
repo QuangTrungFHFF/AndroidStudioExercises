@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
     private EarthquakeAdapter mAdapter;
     TextView emptyView;
     RecyclerView rvEarthquake;
+    ProgressBar loadingView;
 
     ArrayList<EarthquakeInfo> earthquakeInfoArrayList = new ArrayList<EarthquakeInfo>();
     @Override
@@ -54,6 +56,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         httpRequestTask.execute(EARTHQUAKE_REQUEST_URL);**/
         rvEarthquake = (RecyclerView)findViewById(R.id.earthquake_rv);
         emptyView = (TextView)findViewById(R.id.empty_view);
+        loadingView = (ProgressBar)findViewById(R.id.loading_bar);
 
         mAdapter = new EarthquakeAdapter(this,earthquakeInfoArrayList,this);
         rvEarthquake.setAdapter(mAdapter);
@@ -70,6 +73,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
     private void updateUI(ArrayList<EarthquakeInfo> earthquakeInfos){
         earthquakeInfoArrayList = earthquakeInfos;
 
+
         if(earthquakeInfoArrayList.size() ==0){
             emptyView.setVisibility(View.VISIBLE);
         }
@@ -77,6 +81,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         {
             emptyView.setVisibility(View.GONE);
         }
+
 
         //RecyclerView rvEarthquake = (RecyclerView)findViewById(R.id.earthquake_rv);
 
@@ -117,6 +122,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
 
     @Override
     public void onLoadFinished(@NonNull Loader<ArrayList<EarthquakeInfo>> loader, ArrayList<EarthquakeInfo> data) {
+        loadingView.setVisibility(View.GONE);
         updateUI(data);
     }
 

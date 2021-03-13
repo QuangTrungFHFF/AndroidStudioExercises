@@ -25,6 +25,7 @@ public class QueryUtils {
 
 
     public static ArrayList<EarthquakeInfo> extractEarthquakes(String mUrl) {
+
         String jsonString;
         URL url = createURL(mUrl);
         jsonString = makeHttpRequest(url);
