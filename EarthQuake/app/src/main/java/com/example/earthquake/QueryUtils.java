@@ -1,5 +1,8 @@
 package com.example.earthquake;
 
+import android.accessibilityservice.AccessibilityService;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -122,4 +125,6 @@ public class QueryUtils {
         }
         return output.toString();
     }
+
+
 }

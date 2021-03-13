@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,10 +64,18 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         rvEarthquake.setAdapter(mAdapter);
 
         rvEarthquake.setLayoutManager(new LinearLayoutManager(this));
-
+        if(isConnected()){
+            LoaderManager loaderManager = LoaderManager.getInstance(this);
+            loaderManager.initLoader(EARTHQUAKE_LOADER_ID,null,this);
+        }
+        else{
+            loadingView.setVisibility(View.GONE);
+            rvEarthquake.setVisibility(View.GONE);
+            emptyView.setText("No Internet connection");
+            emptyView.setVisibility(View.VISIBLE);
+        }
         //getSupportLoaderManager().initLoader(EARTHQUAKE_LOADER_ID, null, this);
-        LoaderManager loaderManager = LoaderManager.getInstance(this);
-        loaderManager.initLoader(EARTHQUAKE_LOADER_ID,null,this);
+
 
 
     }
@@ -160,6 +170,19 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
             }
         }
     }
+
+    private boolean isConnected(){
+        boolean result = false;
+        ConnectivityManager cm = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo connection = cm.getActiveNetworkInfo();
+        if(connection!=null && connection.isConnectedOrConnecting()){
+            result =true;
+        }
+        return result;
+    }
+
+
+
 
 
 
