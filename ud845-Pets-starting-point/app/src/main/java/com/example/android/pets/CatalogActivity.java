@@ -85,7 +85,7 @@ public class CatalogActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(PetContract.PetsEntry.COLUMN_NAME, "Toboki");
         values.put(PetContract.PetsEntry.COLUMN_BREED, "Ack ack");
-        values.put(PetContract.PetsEntry.COLUMN_GENDER, 2);
+        values.put(PetContract.PetsEntry.COLUMN_GENDER, PetContract.PetsEntry.GENDER_MALE);
 
         long rowId = db.insert(PetContract.PetsEntry.TABLE_NAME,null,values);
         displayDatabaseInfo();
