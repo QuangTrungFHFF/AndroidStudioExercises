@@ -2,6 +2,7 @@ package com.example.android.pets.data;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -12,9 +13,12 @@ public class PetProvider extends ContentProvider {
 
     public static final String LOG_TAG = PetProvider.class.getSimpleName();
 
+    private PetDbHelper mDbHelper;
     @Override
     public boolean onCreate() {
         // TODO: Create and initialize a PetDbHelper object to gain access to the pets database.
+
+        mDbHelper = new PetDbHelper(getContext());
         // Make sure the variable is a global variable, so it can be referenced from other
         // ContentProvider methods.
         return true;
