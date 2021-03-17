@@ -15,10 +15,12 @@
  */
 package com.example.android.pets;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.android.pets.data.PetDbHelper;
@@ -81,13 +83,17 @@ public class CatalogActivity extends AppCompatActivity {
 
     private void insertPets() {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        Uri uri;
 
         ContentValues values = new ContentValues();
         values.put(PetContract.PetsEntry.COLUMN_NAME, "Toboki");
         values.put(PetContract.PetsEntry.COLUMN_BREED, "Ack ack");
         values.put(PetContract.PetsEntry.COLUMN_GENDER, PetContract.PetsEntry.GENDER_MALE);
 
-        long rowId = db.insert(PetContract.PetsEntry.TABLE_NAME,null,values);
+        uri = getContentResolver().insert(PetContract.PetsEntry.CONTENT_URI,values);
+
+        long rowId = ContentUris.parseId(uri);
+
         displayDatabaseInfo();
     }
 
@@ -109,7 +115,8 @@ public class CatalogActivity extends AppCompatActivity {
             , PetContract.PetsEntry.COLUMN_WEIGHT
             };
 
-        Cursor cursor = db.query(PetContract.PetsEntry.TABLE_NAME,project,null,null,null,null,null);
+        //Cursor cursor = db.query(PetContract.PetsEntry.TABLE_NAME,project,null,null,null,null,null);
+        Cursor cursor = getContentResolver().query(PetContract.PetsEntry.CONTENT_URI,project,null,null,null);
         TextView displayView = (TextView) findViewById(R.id.text_view_pet);
 
         try {
