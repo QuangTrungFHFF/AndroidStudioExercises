@@ -15,8 +15,10 @@
  */
 package com.example.android.pets;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.core.app.NavUtils;
 import androidx.appcompat.app.AppCompatActivity;
@@ -166,6 +168,7 @@ public class EditorActivity extends AppCompatActivity {
     private long addToDataBase(String mName,String mBreed, int mWeight){
         PetDbHelper mDbHelper = new PetDbHelper(this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        Uri uri;
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(PetContract.PetsEntry.COLUMN_NAME,mName);
@@ -173,7 +176,9 @@ public class EditorActivity extends AppCompatActivity {
         contentValues.put(PetContract.PetsEntry.COLUMN_GENDER,mGender);
         contentValues.put(PetContract.PetsEntry.COLUMN_WEIGHT,mWeight);
 
-        long mRowId = db.insert(PetContract.PetsEntry.TABLE_NAME,null,contentValues);
+        uri = getContentResolver().insert(PetContract.PetsEntry.CONTENT_URI,contentValues);
+
+        long mRowId = ContentUris.parseId(uri);
         return mRowId;
     }
 }
