@@ -8,6 +8,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -97,6 +98,11 @@ public class PetProvider extends ContentProvider {
                 throw new IllegalArgumentException(getContext().getString(R.string.error_uri) + uri);
         }
 
+        if(id == -1){
+            Log.e(LOG_TAG, "Failed to insert row for " + uri);
+            return null;
+        }
+
         return ContentUris.withAppendedId(uri,id);
     }
 
@@ -107,6 +113,26 @@ public class PetProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        final int match = sUriMatcher.match(uri);
+        int rows;
+        switch(match){
+            case PETS:
+                rows = updateUri(uri,values,selection,selectionArgs);
+                break;
+            case PETS_ID:
+                long id = ContentUris.parseId(uri);
+                selection = PetContract.PetsEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(id)};
+                rows = updateUri(uri,values,selection,selectionArgs);
+            default:
+                throw new IllegalArgumentException(getContext().getString(R.string.error_uri)+ uri);
+        }
+        return rows;
+    }
+
+    private int updateUri(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs){
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        int rows = db.update(PetContract.PetsEntry.TABLE_NAME,values,selection,selectionArgs);
+        return rows;
     }
 }

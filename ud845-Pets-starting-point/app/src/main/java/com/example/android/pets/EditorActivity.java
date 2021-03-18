@@ -150,12 +150,16 @@ public class EditorActivity extends AppCompatActivity {
         int mWeight = 0;
         try {
             mWeight = Integer.parseInt(mWeightEditText.getText().toString());
+            if (mWeight <0){
+                mWeight = 0;
+                Toast.makeText(this,"Cannot recognize weight value. Weight is now set to 0!",Toast.LENGTH_SHORT).show();
+            }
         } catch (NumberFormatException e) {
             Toast.makeText(this,"Cannot recognize weight value. Weight is now set to 0!",Toast.LENGTH_SHORT).show();
         }
 
-        if(TextUtils.isEmpty(mName)){
-            Toast.makeText(this,"Please input your pet name!",Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(mName)|| TextUtils.isEmpty(mBreed)){
+            Toast.makeText(this,"Please input your pet information (name and breed)!",Toast.LENGTH_SHORT).show();
         }
         else
         {
