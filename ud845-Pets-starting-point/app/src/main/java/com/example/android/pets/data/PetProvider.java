@@ -108,7 +108,28 @@ public class PetProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        final int match = sUriMatcher.match(uri);
+        int rows;
+        switch (match){
+            case PETS:
+                rows = deleteUri(uri, selection,selectionArgs);
+                break;
+            case PETS_ID:
+                long id = ContentUris.parseId(uri);
+                selection = PetContract.PetsEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(id)};
+                rows = deleteUri(uri,selection,selectionArgs);
+            default:
+                throw new IllegalArgumentException(getContext().getString(R.string.error_uri)+ uri);
+
+        }
+        return rows;
+    }
+
+    private int deleteUri(Uri uri, String selection, String[] selectionArgs) {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        int rows = db.delete(PetContract.PetsEntry.TABLE_NAME,selection,selectionArgs);
+        return rows;
     }
 
     @Override
