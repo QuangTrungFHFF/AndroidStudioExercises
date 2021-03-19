@@ -37,6 +37,7 @@ import androidx.loader.content.Loader;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.example.android.pets.data.PetContract;
@@ -77,6 +78,16 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
         mDbHelper = new PetDbHelper(this);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(CatalogActivity.this,EditorActivity.class);
+                Uri uri = Uri.withAppendedPath(PetContract.PetsEntry.CONTENT_URI,String.valueOf(id));
+                intent.setData(uri);
+                startActivity(intent);
+            }
+        });
 
     }
 

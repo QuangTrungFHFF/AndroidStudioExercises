@@ -17,6 +17,7 @@ package com.example.android.pets;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -71,6 +72,13 @@ public class EditorActivity extends AppCompatActivity {
         mGenderSpinner = (Spinner) findViewById(R.id.spinner_gender);
 
         setupSpinner();
+
+        Intent intent = getIntent();
+        Uri uri = intent.getData();
+        if(uri != null){
+            setTitle("Edit Pet");
+            Toast.makeText(this,uri.toString(),Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
