@@ -26,7 +26,14 @@ import android.os.Bundle;
 import com.example.android.pets.data.PetCursorAdapter;
 import com.example.android.pets.data.PetDbHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +44,11 @@ import com.example.android.pets.data.PetContract;
 /**
  * Displays list of pets that were entered and stored in the app.
  */
-public class CatalogActivity extends AppCompatActivity {
+public class CatalogActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final int PET_LOADER = 0;
+
+    PetCursorAdapter sCursorAdapter;
 
     private PetDbHelper mDbHelper;
     private ListView listView;
@@ -59,9 +70,14 @@ public class CatalogActivity extends AppCompatActivity {
         View emptyView = findViewById(R.id.empty_view);
         listView.setEmptyView(emptyView);
 
+        sCursorAdapter = new PetCursorAdapter(this,null);
+        listView.setAdapter(sCursorAdapter);
+
+        LoaderManager.getInstance(this).initLoader(PET_LOADER,null,this);        
+
         mDbHelper = new PetDbHelper(this);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-        displayDatabaseInfo();
+
     }
 
     @Override
@@ -101,75 +117,34 @@ public class CatalogActivity extends AppCompatActivity {
 
         long rowId = ContentUris.parseId(uri);
 
-        displayDatabaseInfo();
+
     }
 
-    private void displayDatabaseInfo() {
-        // To access our database, we instantiate our subclass of SQLiteOpenHelper
-        // and pass the context, which is the current activity.
-        PetDbHelper mDbHelper = new PetDbHelper(this);
-
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // Perform this raw SQL query "SELECT * FROM pets"
-        // to get a Cursor that contains all rows from the pets table.
-        String[] project = {
-            PetContract.PetsEntry._ID,
-            PetContract.PetsEntry.COLUMN_NAME
-            ,PetContract.PetsEntry.COLUMN_BREED
-            , PetContract.PetsEntry.COLUMN_GENDER
-            , PetContract.PetsEntry.COLUMN_WEIGHT
-            };
-
-        //Cursor cursor = db.query(PetContract.PetsEntry.TABLE_NAME,project,null,null,null,null,null);
-        Cursor cursor = getContentResolver().query(PetContract.PetsEntry.CONTENT_URI,project,null,null,null);
-
-        PetCursorAdapter petCursorAdapter = new PetCursorAdapter(this,cursor);
-        listView.setAdapter(petCursorAdapter);
-
-
-
-
-        /**TextView displayView = (TextView) findViewById(R.id.text_view_pet);
-
-        try {
-            // Display the number of rows in the Cursor (which reflects the number of rows in the
-            // pets table in the database).
-            displayView.setText("Number of rows in pets database table: " + cursor.getCount() + "\n\n");
-
-            int idColumnIndex = cursor.getColumnIndex(PetContract.PetsEntry._ID);
-            int nameColumnIndex = cursor.getColumnIndex(PetContract.PetsEntry.COLUMN_NAME);
-            int breedColumnIndex = cursor.getColumnIndex(PetContract.PetsEntry.COLUMN_BREED);
-            int genderColumnIndex = cursor.getColumnIndex(PetContract.PetsEntry.COLUMN_GENDER);
-            int weightColumnIndex = cursor.getColumnIndex(PetContract.PetsEntry.COLUMN_WEIGHT);
-
-            displayView.append(PetContract.PetsEntry._ID + " - " + PetContract.PetsEntry.COLUMN_NAME + " - " + PetContract.PetsEntry.COLUMN_BREED
-            + " - " + PetContract.PetsEntry.COLUMN_GENDER + " - " + PetContract.PetsEntry.COLUMN_WEIGHT + "\n");
-
-            while(cursor.moveToNext()){
-                int mId = cursor.getInt(idColumnIndex);
-                String mName = cursor.getString(nameColumnIndex);
-                String mBreed = cursor.getString(breedColumnIndex);
-                int mGenderInt = cursor.getInt(genderColumnIndex);
-                String mGender = getGenderString(mGenderInt);
-                int mWeight = cursor.getInt(weightColumnIndex);
-
-                displayView.append(mId + " - " +
-                        mName + " - " +
-                        mBreed + " - " +
-                        mGender + " - " +
-                        mWeight + "\n");
-            }
-
-
-        } finally {
-            // Always close the cursor when you're done reading from it. This releases all its
-            // resources and makes it invalid.
-            cursor.close();
-        }
-         */
-    }
+//    private void displayDatabaseInfo() {
+//        // To access our database, we instantiate our subclass of SQLiteOpenHelper
+//        // and pass the context, which is the current activity.
+//        PetDbHelper mDbHelper = new PetDbHelper(this);
+//
+//        // Create and/or open a database to read from it
+//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+//
+//        // Perform this raw SQL query "SELECT * FROM pets"
+//        // to get a Cursor that contains all rows from the pets table.
+//        String[] project = {
+//            PetContract.PetsEntry._ID,
+//            PetContract.PetsEntry.COLUMN_NAME
+//            ,PetContract.PetsEntry.COLUMN_BREED
+//            , PetContract.PetsEntry.COLUMN_GENDER
+//            , PetContract.PetsEntry.COLUMN_WEIGHT
+//            };
+//
+//        //Cursor cursor = db.query(PetContract.PetsEntry.TABLE_NAME,project,null,null,null,null,null);
+//        Cursor cursor = getContentResolver().query(PetContract.PetsEntry.CONTENT_URI,project,null,null,null);
+//
+//        PetCursorAdapter petCursorAdapter = new PetCursorAdapter(this,cursor);
+//        listView.setAdapter(petCursorAdapter);
+//
+//    }
 
     private String getGenderString(int i){
         String result = "Unknown";
@@ -181,5 +156,26 @@ public class CatalogActivity extends AppCompatActivity {
         }
         return result;
 
+    }
+
+    @NonNull
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        String[] projection = {
+                PetContract.PetsEntry._ID,
+                PetContract.PetsEntry.COLUMN_NAME
+                ,PetContract.PetsEntry.COLUMN_BREED
+        };
+        return new CursorLoader(this, PetContract.PetsEntry.CONTENT_URI,projection,null,null,null);
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+        sCursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        sCursorAdapter.swapCursor(null);
     }
 }
