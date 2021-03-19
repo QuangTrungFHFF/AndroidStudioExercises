@@ -73,7 +73,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         sCursorAdapter = new PetCursorAdapter(this,null);
         listView.setAdapter(sCursorAdapter);
 
-        LoaderManager.getInstance(this).initLoader(PET_LOADER,null,this);        
+        LoaderManager.getInstance(this).initLoader(PET_LOADER,null,this);
 
         mDbHelper = new PetDbHelper(this);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
