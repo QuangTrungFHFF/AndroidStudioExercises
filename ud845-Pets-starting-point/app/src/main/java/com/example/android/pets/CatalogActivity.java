@@ -56,6 +56,9 @@ public class CatalogActivity extends AppCompatActivity {
             }
         });
         listView = (ListView)findViewById(R.id.list_view_pets);
+        View emptyView = findViewById(R.id.empty_view);
+        listView.setEmptyView(emptyView);
+
         mDbHelper = new PetDbHelper(this);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         displayDatabaseInfo();
@@ -124,7 +127,7 @@ public class CatalogActivity extends AppCompatActivity {
 
         PetCursorAdapter petCursorAdapter = new PetCursorAdapter(this,cursor);
         listView.setAdapter(petCursorAdapter);
-        
+
 
 
 
