@@ -23,12 +23,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.example.android.pets.data.PetCursorAdapter;
 import com.example.android.pets.data.PetDbHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.example.android.pets.data.PetContract;
 
@@ -38,6 +40,7 @@ import com.example.android.pets.data.PetContract;
 public class CatalogActivity extends AppCompatActivity {
 
     private PetDbHelper mDbHelper;
+    private ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,7 @@ public class CatalogActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        listView = (ListView)findViewById(R.id.list_view_pets);
         mDbHelper = new PetDbHelper(this);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         displayDatabaseInfo();
@@ -117,7 +121,14 @@ public class CatalogActivity extends AppCompatActivity {
 
         //Cursor cursor = db.query(PetContract.PetsEntry.TABLE_NAME,project,null,null,null,null,null);
         Cursor cursor = getContentResolver().query(PetContract.PetsEntry.CONTENT_URI,project,null,null,null);
-        TextView displayView = (TextView) findViewById(R.id.text_view_pet);
+
+        PetCursorAdapter petCursorAdapter = new PetCursorAdapter(this,cursor);
+        listView.setAdapter(petCursorAdapter);
+        
+
+
+
+        /**TextView displayView = (TextView) findViewById(R.id.text_view_pet);
 
         try {
             // Display the number of rows in the Cursor (which reflects the number of rows in the
@@ -154,6 +165,7 @@ public class CatalogActivity extends AppCompatActivity {
             // resources and makes it invalid.
             cursor.close();
         }
+         */
     }
 
     private String getGenderString(int i){
