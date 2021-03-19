@@ -133,6 +133,10 @@ public class PetProvider extends ContentProvider {
                 throw new IllegalArgumentException(getContext().getString(R.string.error_uri)+ uri);
 
         }
+        if(rows>0){
+            getContext().getContentResolver().notifyChange(uri,null);
+        }
+
         return rows;
     }
 
@@ -158,6 +162,10 @@ public class PetProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException(getContext().getString(R.string.error_uri)+ uri);
         }
+        if(rows>0){
+            getContext().getContentResolver().notifyChange(uri,null);
+        }
+
         return rows;
     }
 
