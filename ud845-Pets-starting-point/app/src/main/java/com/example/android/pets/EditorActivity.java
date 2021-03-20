@@ -18,12 +18,21 @@ package com.example.android.pets;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.NavUtils;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
+
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,13 +43,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.pets.data.PetContract;
+import com.example.android.pets.data.PetCursorAdapter;
 import com.example.android.pets.data.PetDbHelper;
+
+import java.net.URI;
 
 
 /**
  * Allows user to create a new pet or edit an existing one.
  */
-public class EditorActivity extends AppCompatActivity {
+public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     /** EditText field to enter the pet's name */
     private EditText mNameEditText;
@@ -60,6 +72,12 @@ public class EditorActivity extends AppCompatActivity {
      */
     private int mGender = PetContract.PetsEntry.GENDER_UNKNOWN;
 
+    private static final int PET_LOADER = 0;
+
+    private Uri mCurrentPetUri;
+
+    PetCursorAdapter sCursorAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +96,8 @@ public class EditorActivity extends AppCompatActivity {
         if(uri != null){
             setTitle("Edit Pet");
             Toast.makeText(this,uri.toString(),Toast.LENGTH_SHORT).show();
+            mCurrentPetUri = uri;
+            LoaderManager.getInstance(this).initLoader(PET_LOADER,null,this);
         }
     }
 
@@ -192,5 +212,65 @@ public class EditorActivity extends AppCompatActivity {
 
         long mRowId = ContentUris.parseId(uri);
         return mRowId;
+    }
+
+    @NonNull
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        String[] projection = {PetContract.PetsEntry._ID
+                ,PetContract.PetsEntry.COLUMN_NAME
+                , PetContract.PetsEntry.COLUMN_BREED
+                , PetContract.PetsEntry.COLUMN_GENDER
+                , PetContract.PetsEntry.COLUMN_BREED
+                , PetContract.PetsEntry.COLUMN_WEIGHT};
+        Log.e("sds","here");
+        return new CursorLoader(this,mCurrentPetUri,projection,null,null,null);
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+        Log.e("sds","here2");
+        if(cursor.moveToFirst()){
+
+            int indexId = cursor.getColumnIndex(PetContract.PetsEntry._ID);
+            int indexName = cursor.getColumnIndex(PetContract.PetsEntry.COLUMN_NAME);
+            int indexBreed = cursor.getColumnIndex(PetContract.PetsEntry.COLUMN_BREED);
+            Log.e("sds","here3");
+            int indexGender = cursor.getColumnIndex(PetContract.PetsEntry.COLUMN_GENDER);
+            int indexWeight = cursor.getColumnIndex(PetContract.PetsEntry.COLUMN_WEIGHT);
+
+            String mName = cursor.getString(indexName);
+            String mBreed = cursor.getString(indexBreed);
+            int mGender = cursor.getInt(indexGender);
+            int mWeight = cursor.getInt(indexWeight);
+
+            updateView(mName,mBreed,mGender,mWeight);
+        }
+
+    }
+
+    private void updateView(String mName,String mBreed, int mGender,int mWeight  ) {
+        int mSpinnerGender = getGender(mGender);
+
+        mNameEditText.setText(mName);
+        mBreedEditText.setText(mBreed);
+        mGenderSpinner.setSelection(mSpinnerGender);
+        mWeightEditText.setText(String.valueOf(mWeight));
+    }
+
+    private int getGender(int mGender) {
+        switch (mGender) {
+            case PetContract.PetsEntry.GENDER_MALE:
+                return  1;
+            case PetContract.PetsEntry.GENDER_FEMALE:
+                return 2;
+            default:
+                return 0;
+        }
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        //sCursorAdapter.swapCursor(null);
     }
 }
