@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -128,12 +129,15 @@ public class PetProvider extends ContentProvider {
                 long id = ContentUris.parseId(uri);
                 selection = PetContract.PetsEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(id)};
+
                 rows = deleteUri(uri,selection,selectionArgs);
+
             default:
                 throw new IllegalArgumentException(getContext().getString(R.string.error_uri)+ uri);
 
         }
         if(rows>0){
+
             getContext().getContentResolver().notifyChange(uri,null);
         }
 
