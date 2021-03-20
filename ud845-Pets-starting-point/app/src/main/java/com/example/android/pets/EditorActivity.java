@@ -183,9 +183,21 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 return true;
             // Respond to a click on the "Up" arrow button in the app bar
             case android.R.id.home:
-                // Navigate back to parent activity (CatalogActivity)
-                NavUtils.navigateUpFromSameTask(this);
+                if(!mChange){
+                    // Navigate back to parent activity (CatalogActivity)
+                    NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                    return true;
+                }
+
+                DialogInterface.OnClickListener discardButtonListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                    }
+                };
+                showUnsavedChangesDialog(discardButtonListener);
                 return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -325,6 +337,33 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        
+        builder.setMessage(R.string.unsaved_changes_dialog_msg);
+        builder.setPositiveButton(R.string.discard,discardButtonClickListener);
+        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(dialog!= null){
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!mChange){
+            super.onBackPressed();
+            return;
+        }
+
+        DialogInterface.OnClickListener discardButtonListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();;
+            }
+        };
+        showUnsavedChangesDialog(discardButtonListener);
     }
 }
