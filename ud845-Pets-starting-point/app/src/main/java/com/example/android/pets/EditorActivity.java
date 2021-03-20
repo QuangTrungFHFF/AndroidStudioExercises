@@ -76,6 +76,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     private Uri mCurrentPetUri;
 
+    private static final int INSERT_MODE = 0;
+
+    private static final int UPDATE_MODE = 1;
+
+    private int mode;
+
     PetCursorAdapter sCursorAdapter;
 
     @Override
@@ -94,10 +100,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         Intent intent = getIntent();
         Uri uri = intent.getData();
         if(uri != null){
+            mode = UPDATE_MODE;
             setTitle("Edit Pet");
             Toast.makeText(this,uri.toString(),Toast.LENGTH_SHORT).show();
             mCurrentPetUri = uri;
             LoaderManager.getInstance(this).initLoader(PET_LOADER,null,this);
+        }
+        else
+        {
+            mode = INSERT_MODE;
         }
     }
 
@@ -154,7 +165,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         switch (item.getItemId()) {
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
-                insertPet();
+                savePet();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
@@ -169,7 +180,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         return super.onOptionsItemSelected(item);
     }
 
-    private void insertPet() {
+    private void savePet() {
 
         String mName="";
         mName = mNameEditText.getText().toString();
@@ -191,8 +202,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
         else
         {
-            long mRowId = addToDataBase(mName,mBreed,mWeight);
-            Toast.makeText(this,"added to " + mRowId,Toast.LENGTH_SHORT).show();
+            if(mode == INSERT_MODE){
+                long mRowId = addToDataBase(mName,mBreed,mWeight);
+                Toast.makeText(this,"Added to " + mRowId,Toast.LENGTH_SHORT).show();
+            }
+            else {
+                int mUpdate = updateToDataBase(mName,mBreed,mWeight);
+                Toast.makeText(this,"Update to " + mUpdate,Toast.LENGTH_SHORT).show();
+            }
+
         }
 
     }
@@ -214,6 +232,21 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         return mRowId;
     }
 
+    private int updateToDataBase(String mName,String mBreed,int mWeight){
+        PetDbHelper mDbHelper = new PetDbHelper(this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PetContract.PetsEntry.COLUMN_NAME,mName);
+        contentValues.put(PetContract.PetsEntry.COLUMN_BREED,mBreed);
+        contentValues.put(PetContract.PetsEntry.COLUMN_GENDER,mGender);
+        contentValues.put(PetContract.PetsEntry.COLUMN_WEIGHT,mWeight);
+
+        int update = getContentResolver().update(mCurrentPetUri,contentValues,null,null);
+
+        return update;
+    }
+
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
@@ -223,25 +256,23 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 , PetContract.PetsEntry.COLUMN_GENDER
                 , PetContract.PetsEntry.COLUMN_BREED
                 , PetContract.PetsEntry.COLUMN_WEIGHT};
-        Log.e("sds","here");
         return new CursorLoader(this,mCurrentPetUri,projection,null,null,null);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-        Log.e("sds","here2");
+
         if(cursor.moveToFirst()){
 
             int indexId = cursor.getColumnIndex(PetContract.PetsEntry._ID);
             int indexName = cursor.getColumnIndex(PetContract.PetsEntry.COLUMN_NAME);
             int indexBreed = cursor.getColumnIndex(PetContract.PetsEntry.COLUMN_BREED);
-            Log.e("sds","here3");
             int indexGender = cursor.getColumnIndex(PetContract.PetsEntry.COLUMN_GENDER);
             int indexWeight = cursor.getColumnIndex(PetContract.PetsEntry.COLUMN_WEIGHT);
 
             String mName = cursor.getString(indexName);
             String mBreed = cursor.getString(indexBreed);
-            int mGender = cursor.getInt(indexGender);
+            mGender = cursor.getInt(indexGender);
             int mWeight = cursor.getInt(indexWeight);
 
             updateView(mName,mBreed,mGender,mWeight);
