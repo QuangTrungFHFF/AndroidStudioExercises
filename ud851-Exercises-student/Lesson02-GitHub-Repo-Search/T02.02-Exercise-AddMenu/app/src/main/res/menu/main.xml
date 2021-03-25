@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--    // Do 2 - 7 in main.xml ///////////////////////////////////////////////////////////////////////-->
+<!--    // TODO (2)x Create a menu xml called 'main.xml' in the res->menu folder-->
+<!--    // TODO (3)x Add one menu item to your menu-->
+<!--    // TODO (4)x Give the menu item an id of @+id/action_search-->
+<!--    // TODO (5)x Set the orderInCategory to 1-->
+<!--    // TODO (6)x Show this item if there is room (use app:showAsAction, not android:showAsAction)-->
+<!--    // TODO (7)x Set the title to the search string ("Search") from strings.xml-->
+<!--    // Do 2 - 7 in main.xml ///////////////////////////////////////////////////////////////////////-->
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"
+        android:title="@string/search"/>
+
+
+</menu>
