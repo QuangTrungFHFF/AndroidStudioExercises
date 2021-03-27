@@ -15,8 +15,13 @@
  */
 package com.example.android.asynctaskloader;
 
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
+import android.content.Loader;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +36,8 @@ import java.io.IOException;
 import java.net.URL;
 
 // TODO (1) implement LoaderManager.LoaderCallbacks<String> on MainActivity
-public class MainActivity extends AppCompatActivity {
+@RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
 
     /* A constant to save and restore the URL that is being displayed */
     private static final String SEARCH_QUERY_URL_EXTRA = "query";
@@ -41,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String SEARCH_RESULTS_RAW_JSON = "results";
 
     // TODO (2) Create a constant int to uniquely identify your loader. Call it GITHUB_SEARCH_LOADER
+    private static final int GITHUB_SEARCH_LOADER = 22;
 
     private EditText mSearchBoxEditText;
 
@@ -129,6 +136,35 @@ public class MainActivity extends AppCompatActivity {
         mSearchResultsTextView.setVisibility(View.INVISIBLE);
         /* Then, show the error */
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    @Override
+    public Loader<String> onCreateLoader(int id, final Bundle args) {
+        return new AsyncTaskLoader<String>(this) {
+            @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+            @Override
+            public String loadInBackground() {
+                if(args == null){
+                    return null;
+                }
+                mLoadingIndicator.setVisibility(View.VISIBLE);
+
+
+                forceLoad();
+            }
+            return githubSearchResults;
+        };
+    }
+
+    @Override
+    public void onLoadFinished(Loader<String> loader, String data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<String> loader) {
+
     }
 
     // TODO (3) Override onCreateLoader
