@@ -220,9 +220,26 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
             loadWeatherData();
             return true;
         }
-
+        else if(id == R.id.action_open_map){
+            openLocationOnMap();
+        }
         // TODO (2) Launch the map when the map menu item is clicked
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openLocationOnMap() {
+        String address = "St Martin Straße 30, 85253 Erdweg";
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("geo").path("0,0").appendQueryParameter("q",address);
+        Uri uri = builder.build();
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(uri);
+
+        if(intent.resolveActivity(getPackageManager())!= null){
+            startActivity(intent);
+        }
+
     }
 }
