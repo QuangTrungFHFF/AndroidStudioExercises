@@ -25,6 +25,7 @@
 
     <ListPreference
         android:defaultValue="@string/pref_color_red_value"
+        android:summary="%s"
         android:entries="@array/pref_color_option_labels"
         android:entryValues="@array/pref_color_option_values"
         android:key="@string/pref_color_key"
