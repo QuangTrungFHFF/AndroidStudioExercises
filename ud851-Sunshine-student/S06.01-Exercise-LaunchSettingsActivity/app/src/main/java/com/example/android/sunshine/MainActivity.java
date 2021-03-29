@@ -15,16 +15,17 @@
  */
 package com.example.android.sunshine;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.loader.app.LoaderManager.LoaderCallbacks;
+import androidx.loader.content.AsyncTaskLoader;
+import androidx.loader.content.Loader;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements
          *  true with horizontal lists that need to support a right-to-left layout.
          */
         boolean shouldReverseLayout = false;
-        LinearLayoutManager layoutManager
+        @SuppressLint("WrongConstant") LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, recyclerViewOrientation, shouldReverseLayout);
         mRecyclerView.setLayoutManager(layoutManager);
 
@@ -343,6 +344,12 @@ public class MainActivity extends AppCompatActivity implements
 
         if (id == R.id.action_map) {
             openLocationInMap();
+            return true;
+        }
+
+        if(id == R.id.action_settings){
+            Intent intent = new Intent(MainActivity.this,SettingActivity.class);
+            startActivity(intent);
             return true;
         }
 
