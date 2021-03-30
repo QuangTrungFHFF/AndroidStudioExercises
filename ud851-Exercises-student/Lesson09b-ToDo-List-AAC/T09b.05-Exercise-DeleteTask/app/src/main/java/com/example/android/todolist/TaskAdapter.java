@@ -73,6 +73,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         return new TaskViewHolder(view);
     }
 
+    public List<TaskEntry> getTaskEntries() {
+        return mTaskEntries;
+    }
+
     /**
      * Called by the RecyclerView to display data at a specified position in the Cursor.
      *
