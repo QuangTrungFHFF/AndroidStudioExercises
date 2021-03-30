@@ -125,9 +125,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
 
 
     private void retrieveTasks() {
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
+
                 // TODO (4) Extract all this logic outside the Executor and remove the Executor
                 Log.d(TAG, "Actively retrieving the tasks from the DataBase");
                 // TODO (3) Fix compile issue by wrapping the return type with LiveData
@@ -143,8 +141,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
                 // We will be able to simplify this once we learn more
                 // about Android Architecture Components
 
-            }
-        });
+
     }
 
     @Override
