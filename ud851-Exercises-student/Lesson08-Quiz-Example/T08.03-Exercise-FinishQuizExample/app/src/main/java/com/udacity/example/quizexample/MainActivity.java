@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.udacity.example.droidtermsprovider.DroidTermsExampleContract;
 
@@ -37,8 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
     // The current state of the app
     private int mCurrentState;
+    private int wordIndex = -1;
+    private int defIndex = -1;
 
     private Button mButton;
+    private TextView tvWord, tvDefinition;
 
     // This state is when the word definition is hidden and clicking the button will therefore
     // show the definition
@@ -57,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         // Get the views
         // TODO (1) You'll probably want more than just the Button
         mButton = (Button) findViewById(R.id.button_next);
+        tvWord = (TextView)findViewById(R.id.text_view_word);
+        tvDefinition = (TextView)findViewById(R.id.text_view_definition);
 
         //Run the database operation to get the cursor off of the main thread
         new WordFetchTask().execute();
@@ -86,6 +92,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Change button text
         mButton.setText(getString(R.string.show_definition));
+        if(mData.moveToNext()){
+            tvWord.setText(mData.getString(wordIndex));
+            tvDefinition.setText("Click Show Definition Button to read");
+        }else
+        {
+            mData.moveToFirst();
+            tvWord.setText(mData.getString(wordIndex));
+        }
 
         // TODO (3) Go to the next word in the Cursor, show the next word and hide the definition
         // Note that you shouldn't try to do this if the cursor hasn't been set yet.
@@ -99,14 +113,17 @@ public class MainActivity extends AppCompatActivity {
         // Change button text
         mButton.setText(getString(R.string.next_word));
 
+
         // TODO (4) Show the definition
         mCurrentState = STATE_SHOWN;
 
+        tvDefinition.setText(mData.getString(defIndex));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mData.close();
         // TODO (5) Remember to close your cursor!
     }
 
@@ -135,6 +152,16 @@ public class MainActivity extends AppCompatActivity {
 
             // Set the data for MainActivity
             mData = cursor;
+
+            int woIndex = cursor.getColumnIndex(DroidTermsExampleContract.COLUMN_WORD);
+            int definitionIndex = cursor.getColumnIndex(DroidTermsExampleContract.COLUMN_DEFINITION);
+            wordIndex = woIndex;
+            defIndex = definitionIndex;
+            if(mData.moveToFirst()){
+                tvWord.setText(cursor.getString(woIndex));
+                //tvDefinition.setText(cursor.getString(definitionIndex));
+            }
+
 
             // TODO (2) Initialize anything that you need the cursor for, such as setting up
             // the screen with the first word and setting any other instance variables
