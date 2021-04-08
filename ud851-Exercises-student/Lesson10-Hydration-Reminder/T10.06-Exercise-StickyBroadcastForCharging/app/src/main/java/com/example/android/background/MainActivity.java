@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements
         mChargingReceiver = new ChargingBroadcastReceiver();
         mChargingIntentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
         mChargingIntentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        //holder
     }
 
     @Override
